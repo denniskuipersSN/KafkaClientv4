@@ -31,7 +31,6 @@ public class KafkaAvroProducer {
 
         Properties props = new Properties();
         Properties propsProducer = new Properties();
-        System.out.println(props);
         try (InputStream input = new FileInputStream(ProducerConfigFile)) {
             propsProducer.load(input);
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, propsProducer.getProperty("bootstrap.servers"));
