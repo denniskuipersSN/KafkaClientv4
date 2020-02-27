@@ -8,9 +8,15 @@
     <version>1.0-SNAPSHOT</version>
     <repositories>
         <repository>
-            <id>/lib</id>
-            <url>file:${project.basedir}/lib</url>
+            <id>maven</id>
+            <name>confluent</name>
+            <url>https://mvnrepository.com</url>
         </repository>
+        <repository>
+           <id>confluent</id>
+           <name>confluent</name>
+           <url>https://packages.confluent.io/maven</url>
+       </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -20,39 +26,29 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>kafka-clients</groupId>
+            <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <scope>system</scope>
             <version>2.1.0</version>
-            <systemPath>${basedir}\lib\kafka-clients-2.1.0.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>kafka-avro-serializer</groupId>
+            <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
-            <scope>system</scope>
             <version>5.4.0</version>
-            <systemPath>${basedir}\lib\kafka-avro-serializer-5.4.0.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>kafka-schema-registry-client</groupId>
+            <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
-            <scope>system</scope>
             <version>5.4.0</version>
-            <systemPath>${basedir}\lib\kafka-schema-registry-client-5.4.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <scope>system</scope>
             <version>1.2.17</version>
-            <systemPath>${basedir}\lib\log4j-1.2.17.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>avro</groupId>
-            <artifactId>avro</artifactId>
-            <scope>system</scope>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-maven-plugin</artifactId>
             <version>1.9.2</version>
-            <systemPath>${basedir}\lib\avro-1.9.2.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
