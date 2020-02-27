@@ -23,5 +23,51 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" name="src" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: kafka-clients:kafka-clients:2.1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/kafka-clients-2.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: kafka-avro-serializer:kafka-avro-serializer:5.4.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/kafka-avro-serializer-5.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: kafka-schema-registry-client:kafka-schema-registry-client:5.4.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/kafka-schema-registry-client-5.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: log4j:log4j:1.2.17">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.17.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: avro:avro:1.9.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/avro-1.9.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
