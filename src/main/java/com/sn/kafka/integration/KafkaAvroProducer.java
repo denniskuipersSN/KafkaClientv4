@@ -59,7 +59,7 @@ public class KafkaAvroProducer {
         GenericRecord avroRecord = new GenericData.Record(schema);
         avroRecord.put("f1", "value1");
         System.out.println("Sending Message" + avroRecord.getSchema().toString());
-        ProducerRecord<String, Object> record = new ProducerRecord<>("testAvro12", key, avroRecord);
+        ProducerRecord<String, GenericRecord> record = new ProducerRecord<>("testAvro12", key, avroRecord);
         try {
             producer.send(record);
             System.out.println(producer.metrics());
