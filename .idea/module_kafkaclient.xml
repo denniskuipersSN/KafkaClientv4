@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_kafkaclient" default="compile.module.kafkaclient">
+  <dirname property="module.kafkaclient.basedir" file="${ant.file.module_kafkaclient}"/>
+  
+  <property name="module.jdk.home.kafkaclient" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.kafkaclient" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.kafkaclient" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.kafkaclient" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="kafkaclient.output.dir" value="${module.kafkaclient.basedir}/../out/production/KafkaClient"/>
+  <property name="kafkaclient.testoutput.dir" value="${module.kafkaclient.basedir}/../out/test/KafkaClient"/>
+  
+  <path id="kafkaclient.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="kafkaclient.module.production.classpath">
+    <path refid="${module.jdk.classpath.kafkaclient}"/>
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="kafkaclient.runtime.production.module.classpath">
+    <pathelement location="${kafkaclient.output.dir}"/>
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="kafkaclient.module.classpath">
+    <path refid="${module.jdk.classpath.kafkaclient}"/>
+    <pathelement location="${kafkaclient.output.dir}"/>
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="kafkaclient.runtime.module.classpath">
+    <pathelement location="${kafkaclient.testoutput.dir}"/>
+    <pathelement location="${kafkaclient.output.dir}"/>
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.kafkaclient">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.kafkaclient">
+    <patternset refid="excluded.from.module.kafkaclient"/>
+  </patternset>
+  
+  <path id="kafkaclient.module.sourcepath">
+    <dirset dir="${module.kafkaclient.basedir}/../../KafkaClient">
+      <include name="src"/>
+      <include name="src/META-INF"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.kafkaclient" depends="compile.module.kafkaclient.production,compile.module.kafkaclient.tests" description="Compile module KafkaClient"/>
+  
+  <target name="compile.module.kafkaclient.production" depends="register.custom.compilers" description="Compile module KafkaClient; production classes">
+    <mkdir dir="${kafkaclient.output.dir}"/>
+    <javac2 destdir="${kafkaclient.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.kafkaclient}/javac">
+      <compilerarg line="${compiler.args.kafkaclient}"/>
+      <bootclasspath refid="kafkaclient.module.bootclasspath"/>
+      <classpath refid="kafkaclient.module.production.classpath"/>
+      <src refid="kafkaclient.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.kafkaclient"/>
+    </javac2>
+    
+    <copy todir="${kafkaclient.output.dir}">
+      <fileset dir="${module.kafkaclient.basedir}/../src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.kafkaclient.basedir}/../src/META-INF">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.kafkaclient.tests" depends="register.custom.compilers,compile.module.kafkaclient.production" description="compile module KafkaClient; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.kafkaclient" description="cleanup module">
+    <delete dir="${kafkaclient.output.dir}"/>
+    <delete dir="${kafkaclient.testoutput.dir}"/>
+  </target>
+</project>

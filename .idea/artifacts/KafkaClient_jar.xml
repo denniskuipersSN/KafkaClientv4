@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="KafkaClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/KafkaClientSN_jar</output-path>
+    <properties id="ant-postprocessing">
+      <options enabled="true" />
+    </properties>
+    <properties id="ant-preprocessing">
+      <options enabled="true" />
+    </properties>
+    <root id="archive" name="KafkaClient.jar">
+      <element id="module-output" name="KafkaClient" />
+      <element id="file-copy" path="$PROJECT_DIR$/out/production/KafkaClient/KafkaClientConsumerTestSN.class" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      <element id="module-source" name="KafkaClient" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/resources" />
+    </root>
+  </artifact>
+</component>
