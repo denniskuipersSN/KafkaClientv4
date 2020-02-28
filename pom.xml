@@ -20,7 +20,7 @@
         <repository>
             <id>jenkins</id>
             <name>confluent</name>
-            <url>https://repo.jenkins-ci.org/incrementals</url>
+            <url>https://repo.jenkins-ci.org</url>
         </repository>
     </repositories>
     <dependencies>
@@ -68,6 +68,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.jenkinsci.plugins</groupId>
             <artifactId>pipeline-model-definition</artifactId>
             <version>1.2</version>
@@ -78,6 +83,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
                 <configuration>
                     <source>7</source>
                     <target>7</target>
