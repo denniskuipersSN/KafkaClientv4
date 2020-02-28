@@ -16,11 +16,11 @@
            <id>confluent</id>
            <name>confluent</name>
            <url>https://packages.confluent.io/maven</url>
-       </repository>
+        </repository>
         <repository>
             <id>jenkins</id>
             <name>confluent</name>
-            <url>https://repo.jenkins-ci.org/incrementals/</url>
+            <url>https://repo.jenkins-ci.org/incrementals</url>
         </repository>
     </repositories>
     <dependencies>
