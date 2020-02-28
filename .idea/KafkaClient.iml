@@ -72,5 +72,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.4.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jenkins-ci.plugins:pipeline-utility-steps:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jenkinsci.plugins:pipeline-model-definition:1.2" level="project" />
   </component>
 </module>

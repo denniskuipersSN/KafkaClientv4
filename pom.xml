@@ -62,6 +62,11 @@
             <version>1.5.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jenkinsci.plugins</groupId>
+            <artifactId>pipeline-model-definition</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
