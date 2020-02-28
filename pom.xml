@@ -97,7 +97,8 @@
                             <mainClass>com.sn.kafka.integration.KafkaAvroProducer</mainClass>
                             <classpathScope>test</classpathScope>
                             <arguments>
-                                   <argument>"-configfile /var/lib/jenkins/workspace/KafkaIntegration/src/main/java/resources/testSNKafka.properties"</argument>
+                                   <argument>-configfile</argument>
+                                   <argument>/var/lib/jenkins/workspace/KafkaIntegration/src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
                        </configuration>
                     </execution>
