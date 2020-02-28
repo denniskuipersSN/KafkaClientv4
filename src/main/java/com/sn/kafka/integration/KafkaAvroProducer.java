@@ -100,6 +100,11 @@ public class KafkaAvroProducer {
         return prop;
     }
 
+    public static void mainCaller() throws Exception {
+        String[] args = {"-configfile",""};
+        main(args);
+    }
+
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
         Properties prop = getConfigFile(args);
