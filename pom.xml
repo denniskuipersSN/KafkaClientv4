@@ -102,6 +102,20 @@
                             </arguments>
                        </configuration>
                     </execution>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.sn.kafka.integration.KafkaClientConsumerTestSN</mainClass>
+                            <classpathScope>test</classpathScope>
+                            <arguments>
+                                <argument>-configfile</argument>
+                                <argument>/var/lib/jenkins/workspace/KafkaIntegration/src/main/java/resources/testSNKafka.properties</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
              </plugin>
         </plugins>
