@@ -89,6 +89,7 @@
                 <version>1.2.1</version>
                 <executions>
                     <execution>
+                        <id>TestProducer</id>
                        <phase>test</phase>
                         <goals>
                            <goal>java</goal>
@@ -103,6 +104,7 @@
                        </configuration>
                     </execution>
                     <execution>
+                        <id>TestConsumer</id>
                         <phase>test</phase>
                         <goals>
                             <goal>java</goal>
