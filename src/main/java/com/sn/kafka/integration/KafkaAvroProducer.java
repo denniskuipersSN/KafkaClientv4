@@ -28,7 +28,7 @@ public class KafkaAvroProducer {
         String topic      = producerProp.getProperty("topic");
         String SchemaRegistryURL = producerProp.getProperty("schema_url");
         String ProducerConfigFile = producerProp.getProperty("ProducerConfgFile");
-        String Test = "test";
+        String test = "test";
 
         Properties props = new Properties();
         Properties propsProducer = new Properties();
