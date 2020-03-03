@@ -25,7 +25,7 @@ public class KafkaAvroProducer {
     private static void ProducerClient(Properties producerProp)
     {
 
-        String topic      = producerProp.getProperty("topic");
+        String topic = producerProp.getProperty("topic");
         String SchemaRegistryURL = producerProp.getProperty("schema_url");
         String ProducerConfigFile = producerProp.getProperty("ProducerConfgFile");
 
@@ -50,7 +50,7 @@ public class KafkaAvroProducer {
         props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
         KafkaProducer producer = new KafkaProducer(props);
 
-        String key = "key1";
+        String key = "key11";
         String userSchema = "{\"type\":\"record\"," +
                 "\"name\":\"myrecord\"," +
                 "\"fields\":[{\"name\":\"f1\",\"type\":\"string\"}]}";
