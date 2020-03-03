@@ -62,7 +62,6 @@ public class KafkaAvroProducer {
         ProducerRecord<String, GenericRecord> record = new ProducerRecord<>("testAvro12", key, avroRecord);
         try {
             producer.send(record);
-            System.out.println(producer.metrics());
         } catch (Exception e) {
              e.printStackTrace();
             // may need to do something wth it
