@@ -39,8 +39,8 @@ public class KafkaClientConsumerTestSN {
             }
             propsConsumer.put("bootstrap.servers",propsConsumer.get("bootstrap.servers"));
             propsConsumer.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-            propsConsumer.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,props.getProperty("key.deserializer"));
-            propsConsumer.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, props.getProperty("value.deserializer"));
+            propsConsumer.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,propsConsumer.getProperty("key.deserializer"));
+            propsConsumer.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, propsConsumer.getProperty("value.deserializer"));
             propsConsumer.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
             propsConsumer.put(ConsumerConfig.GROUP_ID_CONFIG, propsConsumer.getProperty("group.id"));
 
