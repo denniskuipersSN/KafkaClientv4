@@ -46,7 +46,7 @@ public class KafkaAvroProducer {
         }
 
         props.put(ProducerConfig.CLIENT_ID_CONFIG, topic);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, propsProducer.getProperty("key.serialize"));
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, propsProducer.getProperty("key.serializer"));
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,propsProducer.getProperty("value.serializer"));
         props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
         KafkaProducer producer = new KafkaProducer(props);
