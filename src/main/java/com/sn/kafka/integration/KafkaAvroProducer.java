@@ -99,9 +99,10 @@ public class KafkaAvroProducer {
         return prop;
     }
 
-    public static void mainCaller() throws Exception {
+    public static int mainCaller() throws Exception {
         String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
         main(args);
+        return 10;
     }
 
     public static void main(String[] args) throws Exception {
