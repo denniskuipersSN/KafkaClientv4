@@ -99,7 +99,7 @@
                             <classpathScope>test</classpathScope>
                             <arguments>
                                    <argument>-configfile</argument>
-                                   <argument>/var/lib/jenkins/workspace/KafkaPipeLine/src/main/java/resources/testSNKafka.properties</argument>
+                                   <argument>/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
                        </configuration>
                     </execution>
@@ -114,7 +114,7 @@
                             <classpathScope>test</classpathScope>
                             <arguments>
                                 <argument>-configfile</argument>
-                                <argument>/var/lib/jenkins/workspace/KafkaPipeLine/src/main/java/resources/testSNKafka.properties</argument>
+                                <argument>/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
                         </configuration>
                     </execution>

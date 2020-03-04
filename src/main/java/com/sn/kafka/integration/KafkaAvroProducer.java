@@ -100,7 +100,7 @@ public class KafkaAvroProducer {
     }
 
     public static void mainCaller() throws Exception {
-        String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaIntegration/src/main/java/resources/testSNKafka.properties"};
+        String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
         main(args);
     }
 
