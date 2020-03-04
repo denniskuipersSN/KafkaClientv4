@@ -114,7 +114,18 @@ public class KafkaClientConsumerTestSN {
         System.out.println("Start Consumer");
         return runConsumer(prop);
     }
+
+    public static int mainCaller() throws Exception {
+        String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
+        main(args);
+        return 10;
+    }
+
     public static void main(String[] args) throws Exception {
+
+        String[] args1 = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
+        if (args.length == 0)
+             args = args1;
         Properties prop = getConfigFile(args);
         String Messages = runConsumer(prop);
         System.out.println(Messages);

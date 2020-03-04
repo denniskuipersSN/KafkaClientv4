@@ -16,4 +16,9 @@ public class TestKafkaAvroProducer {
         assertEquals(10, KafkaAvroProducer.mainCaller ()) ;
     }
 
+    @Test
+    public void testKafkaClientConsumerTestSN()  throws Exception {
+        // assert statements
+        assertEquals(10, KafkaClientConsumerTestSN.mainCaller ()) ;
+    }
 }
