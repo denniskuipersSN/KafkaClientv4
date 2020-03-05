@@ -84,7 +84,7 @@
                 <version>2.22.1</version>
                 <configuration>
                     <forkMode>always</forkMode>
-                    <argLine>-Dlog4j.configuration=/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/log4j.properties</argLine>
+                    <argLine>-Dlog4j.configuration=src/main/java/resources/log4j.properties</argLine>
                 </configuration>
             </plugin>
             <plugin>
@@ -103,7 +103,7 @@
                             <classpathScope>test</classpathScope>
                             <arguments>
                                    <argument>-configfile</argument>
-                                   <argument>/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties</argument>
+                                   <argument>src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
                        </configuration>
                     </execution>
@@ -118,7 +118,7 @@
                             <classpathScope>test</classpathScope>
                             <arguments>
                                 <argument>-configfile</argument>
-                                <argument>/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties</argument>
+                                <argument>src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
                         </configuration>
                     </execution>

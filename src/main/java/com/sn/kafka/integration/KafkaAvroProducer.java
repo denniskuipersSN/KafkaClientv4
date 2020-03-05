@@ -28,6 +28,12 @@ public class KafkaAvroProducer {
         String topic = producerProp.getProperty("topic");
         String SchemaRegistryURL = producerProp.getProperty("schema_url");
         String ProducerConfigFile = producerProp.getProperty("ProducerConfgFile");
+        if (producerProp.containsKey ("javax.net.ssl.trustStore")) {
+            System.setProperty("javax.net.ssl.trustStore",producerProp.getProperty("javax.net.ssl.trustStore"));
+            System.setProperty("javax.net.ssl.trustStorePassword",producerProp.getProperty("javax.net.ssl.trustStorePassword"));
+            System.setProperty("javax.net.ssl.keyStore",producerProp.getProperty("javax.net.ssl.keyStore"));
+            System.setProperty("javax.net.ssl.keyStorePassword",producerProp.getProperty("javax.net.ssl.keyStorePassword"));
+        }
 
         Properties props = new Properties();
         Properties propsProducer = new Properties();
@@ -100,7 +106,7 @@ public class KafkaAvroProducer {
     }
 
     public static int mainCaller() throws Exception {
-        String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
+        String[] args = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         main(args);
         return 10;
     }

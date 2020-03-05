@@ -26,12 +26,18 @@ public class KafkaClientConsumerTestSN {
         String topic = props.getProperty("topic");
         String SchemaRegistryURL = props.getProperty("schema_url");
         String ConsumerConfigFile = props.getProperty("ConsumerConfgFile");
+        if (props.containsKey ("javax.net.ssl.trustStore")) {
+          System.setProperty("javax.net.ssl.trustStore",props.getProperty("javax.net.ssl.trustStore"));
+          System.setProperty("javax.net.ssl.trustStorePassword",props.getProperty("javax.net.ssl.trustStorePassword"));
+          System.setProperty("javax.net.ssl.keyStore",props.getProperty("javax.net.ssl.keyStore"));
+          System.setProperty("javax.net.ssl.keyStorePassword",props.getProperty("javax.net.ssl.keyStorePassword"));
+        }
 
         Properties propsConsumer = new Properties();
         try (InputStream input = new FileInputStream(ConsumerConfigFile)) {
 
             propsConsumer.load(input);
-            if (props.containsKey("ssl.truststore.location")) {
+            if (propsConsumer.containsKey("ssl.truststore.location")) {
                 propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, props.getProperty("ssl.truststore.location"));
                 propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, props.getProperty("ssl.truststore.password"));
                 propsConsumer.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, props.getProperty("ssl.keystore.location"));
@@ -116,14 +122,14 @@ public class KafkaClientConsumerTestSN {
     }
 
     public static int mainCaller() throws Exception {
-        String[] args = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
+        String[] args = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         main(args);
         return 10;
     }
 
     public static void main(String[] args) throws Exception {
 
-        String[] args1 = {"-configfile","/var/lib/jenkins/workspace/KafkaPipeLine@2/src/main/java/resources/testSNKafka.properties"};
+        String[] args1 = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         if (args.length == 0)
              args = args1;
         Properties prop = getConfigFile(args);
