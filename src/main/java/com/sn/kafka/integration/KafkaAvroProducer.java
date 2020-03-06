@@ -88,7 +88,7 @@ public class KafkaAvroProducer {
     }
 
     private static Properties getConfigFile(String[] args){
-        String Test = "111hallo11<";
+        String Test = "111hallo11";
         CliArgs cliArgs = new CliArgs(args);
         String configfile   = cliArgs.switchValue("-configfile");
         System.out.println("ConfigFile : " + configfile);
