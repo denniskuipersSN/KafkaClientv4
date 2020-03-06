@@ -37,12 +37,12 @@ public class KafkaClientConsumerTestSN {
         try (InputStream input = new FileInputStream(ConsumerConfigFile)) {
 
             propsConsumer.load(input);
-            if (propsConsumer.containsKey("ssl.truststore.location")) {
-                propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, props.getProperty("ssl.truststore.location"));
-                propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, props.getProperty("ssl.truststore.password"));
-                propsConsumer.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, props.getProperty("ssl.keystore.location"));
-                propsConsumer.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, props.getProperty("ssl.key.password"));
-            }
+            //if (propsConsumer.containsKey("ssl.truststore.location")) {
+            //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, props.getProperty("ssl.truststore.location"));
+            //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, props.getProperty("ssl.truststore.password"));
+            //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, props.getProperty("ssl.keystore.location"));
+            //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, props.getProperty("ssl.key.password"));
+            //}
             propsConsumer.put("bootstrap.servers",propsConsumer.get("bootstrap.servers"));
             propsConsumer.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
             propsConsumer.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,propsConsumer.getProperty("key.deserializer"));
