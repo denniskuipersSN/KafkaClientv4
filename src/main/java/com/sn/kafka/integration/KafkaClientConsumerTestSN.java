@@ -72,7 +72,7 @@ public class KafkaClientConsumerTestSN {
 
     private static String runConsumer(Properties prop) throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder(100);
-        String s = "2212";
+        String s = "222212";
         try (Consumer<String, GenericRecord> consumer = createConsumer(prop)) {
             Duration duration = Duration.ofSeconds(10);
             try {
