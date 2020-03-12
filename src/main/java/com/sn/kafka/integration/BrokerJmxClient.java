@@ -46,7 +46,7 @@ public class BrokerJmxClient
     }
 
     public static void main(String[] args) throws Exception {
-        BrokerJmxClient JMXNew =  new BrokerJmxClient("ec2-18-191-188-44.us-east-2.compute.amazonaws.com",9111,1);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
         System.out.println (JMXNew.getBrokerStats ());
     }
 
