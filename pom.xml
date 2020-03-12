@@ -70,8 +70,8 @@
             <version>1.9.2</version>
         </dependency>
         <dependency>
-            <groupId>kafka</groupId>
-            <artifactId>kafka.0.0.5</artifactId>
+            <groupId>kafka.0.0.5</groupId>
+            <artifactId>kafka</artifactId>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/kafka-0.0.5.jar</systemPath>
         </dependency>

@@ -73,7 +73,7 @@
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity-engine-core:2.2" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.1" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: kafka:kafka:unknown">
+      <library name="Maven: kafka.0.0.5:kafka:unknown">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/kafka-0.0.5.jar!/" />
         </CLASSES>
