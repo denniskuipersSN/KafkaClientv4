@@ -41,7 +41,7 @@ public class BrokerJmxClient
     {
         StringBuffer buf = new StringBuffer();
         SocketServerStatsMBean stats = createSocketMbean();
-        buf.append(stats.getNumFetchRequests () / (1024 *1024)  + "," +  stats.getBytesReadPerSecond()  / (1024 *1024) );
+        buf.append(stats.getBytesReadPerSecond () / (1024 *1024)  + "," +  stats.getBytesReadPerSecond()  / (1024 *1024) );
         return buf.toString();
     }
 
