@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>kafka</groupId>
-            <artifactId>kafka</artifactId>
+            <artifactId>kafka.0.0.5</artifactId>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/kafka-0.0.5.jar</systemPath>
         </dependency>
