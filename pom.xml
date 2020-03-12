@@ -22,6 +22,15 @@
             <name>confluent</name>
             <url>https://repo.jenkins-ci.org</url>
         </repository>
+        <repository>
+            <id>nuget</id>
+            <name>nuget</name>
+            <url>https://www.nuget.org/packages</url>
+        </repository>
+        <repository>
+            <id>libo</id>
+            <url>file:///${project.basedir}/lib</url>
+         </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -34,6 +43,11 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>5.4.0-ccs</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.8.0</artifactId>
+            <version>0.8.1</version>
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
@@ -54,6 +68,12 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro-maven-plugin</artifactId>
             <version>1.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>kafka</groupId>
+            <artifactId>kafka</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/kafka-0.0.5.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
