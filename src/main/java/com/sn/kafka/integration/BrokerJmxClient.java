@@ -2,12 +2,21 @@ package com.sn.kafka.integration;
 
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
+import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 import kafka.network.*;
+import org.apache.kafka.common.MetricName;
+import org.apache.kafka.common.utils.Sanitizer;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class BrokerJmxClient
 {
@@ -23,9 +32,17 @@ public class BrokerJmxClient
 
     public MBeanServerConnection getMbeanConnection() throws Exception
     {
+
         JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://"+ host+ ":" + port + "/jmxrmi");
         JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
         MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+        Set<ObjectInstance> getAllBeans = mbsc.queryMBeans (null,null);
+        Iterator<ObjectInstance> iterator = getAllBeans.iterator();
+        while (iterator.hasNext()) {
+            ObjectInstance instance = iterator.next ();
+            System.out.println ("Class Name: " + instance.getClassName ());
+            System.out.println ("Object Name: " + instance.getObjectName ());
+        }
         return mbsc;
     }
 
@@ -41,13 +58,15 @@ public class BrokerJmxClient
     {
         StringBuffer buf = new StringBuffer();
         SocketServerStatsMBean stats = createSocketMbean();
-        buf.append(stats.getBytesReadPerSecond () / (1024 *1024)  + "," +  stats.getBytesReadPerSecond()  / (1024 *1024) );
+        buf.append(stats.getBytesReadPerSecond () / (1024 *1024)  + "," +  stats.getBytesReadPerSecond ()  / (1024 *1024) );
         return buf.toString();
     }
+
+
 
     public static void main(String[] args) throws Exception {
         BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
         System.out.println (JMXNew.getBrokerStats ());
+        //System.out.println (getMBeanName("class", "kafka:type=kafka.SocketServerStats"));
     }
-
 }
