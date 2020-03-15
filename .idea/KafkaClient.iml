@@ -72,15 +72,6 @@
     <orderEntry type="library" name="Maven: org.apache.avro:avro-compiler:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity-engine-core:2.2" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.1" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: kafka:kafka:0.0.5">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/kafka-0.0.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.4.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.1.1" level="project" />
