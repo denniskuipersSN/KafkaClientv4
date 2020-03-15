@@ -13,6 +13,8 @@ import org.apache.kafka.common.MetricName;
 import org.apache.kafka.common.utils.Sanitizer;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -59,7 +61,8 @@ public class BrokerJmxClient
     {
         StringBuffer buf = new StringBuffer();
         JmxReporter.GaugeMBean stats = createSocketMbean();
-        buf.append(((JmxReporter.GaugeMBean) stats).getValue () );
+        Object value = stats.getValue ();
+        buf.append(value.toString ()) ;
         return buf.toString();
     }
 
