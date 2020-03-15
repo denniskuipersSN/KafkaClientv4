@@ -61,7 +61,7 @@ public class BrokerJmxClient
     {
         StringBuffer buf = new StringBuffer();
         JmxReporter.GaugeMBean stats = createSocketMbean();
-        Object value = stats.toString ();
+        Object value = stats.objectName ().getKeyPropertyListString ();
         buf.append(value.toString ()) ;
         return buf.toString();
     }
