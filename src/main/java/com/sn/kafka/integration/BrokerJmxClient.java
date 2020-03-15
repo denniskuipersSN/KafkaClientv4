@@ -15,10 +15,8 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import com.yammer.metrics.reporting.*;
 
 public class BrokerJmxClient
@@ -45,8 +43,14 @@ public class BrokerJmxClient
             ObjectInstance instance = iterator.next ();
             System.out.println ("Class Name: " + instance.getClassName ());
             System.out.println ("Object Name: " + instance.getObjectName ());
-            System.out.println (instance.getObjectName ().getKeyPropertyListString ());
-         }
+
+            Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
+            for (Object key: attributes.keySet () ) {
+                if (key.toString ().contains ("Count")){
+                    System.out.println (mbsc.getAttribute (instance.getObjectName (),key.toString ()));
+                }
+
+            }
         return mbsc;
     }
 
