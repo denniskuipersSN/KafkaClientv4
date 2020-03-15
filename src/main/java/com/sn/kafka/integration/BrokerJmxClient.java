@@ -49,19 +49,19 @@ public class BrokerJmxClient
         return mbsc;
     }
 
-    public JmxReporter.GaugeMBean createSocketMbean() throws Exception
+    public JmxReporter.HistogramMBean createSocketMbean() throws Exception
     {
 
         ObjectName mbeanName = new ObjectName("kafka.network:type=RequestMetrics,name=RequestQueueTimeMs,request=ControlledShutdown");
-        JmxReporter.GaugeMBean stats  = JMX.newMBeanProxy(getMbeanConnection(), mbeanName, JmxReporter.GaugeMBean.class, true);
+        JmxReporter.HistogramMBean stats  = JMX.newMBeanProxy(getMbeanConnection(), mbeanName, JmxReporter.HistogramMBean.class, true);
         return stats;
     }
 
     public String getBrokerStats() throws Exception
     {
         StringBuffer buf = new StringBuffer();
-        JmxReporter.GaugeMBean stats = createSocketMbean();
-        Object value = stats.objectName ().getKeyPropertyListString ();
+        JmxReporter.HistogramMBean stats = createSocketMbean();
+        Object value = stats.getCount ();
         buf.append(value.toString ()) ;
         return buf.toString();
     }
