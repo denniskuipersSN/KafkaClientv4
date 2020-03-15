@@ -46,6 +46,7 @@ public class BrokerJmxClient
 
             Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             for (Object key : attributes.keySet ()) {
+                System.out.println (key.toString ());
                 if (key.toString ().contains ("Count")) {
                     System.out.println (mbsc.getAttribute (instance.getObjectName (), key.toString ()));
                 }
