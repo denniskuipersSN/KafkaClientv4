@@ -50,7 +50,7 @@ public class BrokerJmxClient
     public JmxReporter.GaugeMBean createSocketMbean() throws Exception
     {
 
-        ObjectName mbeanName = new ObjectName("kafka:type=kafka.network");
+        ObjectName mbeanName = new ObjectName("kafka.network:type=RequestMetrics,name=RequestQueueTimeMs,request=ControlledShutdown");
         JmxReporter.GaugeMBean stats  = JMX.newMBeanProxy(getMbeanConnection(), mbeanName, JmxReporter.GaugeMBean.class, true);
         return stats;
     }
