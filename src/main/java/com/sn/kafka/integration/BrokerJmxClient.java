@@ -58,7 +58,7 @@ public class BrokerJmxClient
     public String getBrokerStats() throws Exception
     {
         StringBuffer buf = new StringBuffer();
-        JmxReporter.MetricMBean stats = createSocketMbean();
+        JmxReporter.GaugeMBean stats = createSocketMbean();
         buf.append(((JmxReporter.GaugeMBean) stats).getValue () );
         return buf.toString();
     }
