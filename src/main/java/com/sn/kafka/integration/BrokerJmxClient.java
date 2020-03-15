@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import com.yammer.metrics.reporting.*;
 
 public class BrokerJmxClient
 {
@@ -46,19 +47,19 @@ public class BrokerJmxClient
         return mbsc;
     }
 
-    public SocketServerStatsMBean createSocketMbean() throws Exception
+    public JmxReporter.GaugeMBean createSocketMbean() throws Exception
     {
 
-        ObjectName mbeanName = new ObjectName("kafka:type=kafka.SocketServerStats");
-        SocketServerStatsMBean stats = JMX.newMBeanProxy(getMbeanConnection(), mbeanName, SocketServerStatsMBean.class, true);
+        ObjectName mbeanName = new ObjectName("kafka:type=kafka.network");
+        JmxReporter.GaugeMBean stats  = JMX.newMBeanProxy(getMbeanConnection(), mbeanName, JmxReporter.GaugeMBean.class, true);
         return stats;
     }
 
     public String getBrokerStats() throws Exception
     {
         StringBuffer buf = new StringBuffer();
-        SocketServerStatsMBean stats = createSocketMbean();
-        buf.append(stats.getBytesReadPerSecond () / (1024 *1024)  + "," +  stats.getBytesReadPerSecond ()  / (1024 *1024) );
+        JmxReporter.MetricMBean stats = createSocketMbean();
+        buf.append(((JmxReporter.GaugeMBean) stats).getValue () );
         return buf.toString();
     }
 
