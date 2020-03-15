@@ -45,7 +45,7 @@ public class BrokerJmxClient
             ObjectInstance instance = iterator.next ();
             System.out.println ("Class Name: " + instance.getClassName ());
             System.out.println ("Object Name: " + instance.getObjectName ());
-        }
+         }
         return mbsc;
     }
 
@@ -61,7 +61,7 @@ public class BrokerJmxClient
     {
         StringBuffer buf = new StringBuffer();
         JmxReporter.GaugeMBean stats = createSocketMbean();
-        Object value = stats.getValue ();
+        Object value = stats.toString ();
         buf.append(value.toString ()) ;
         return buf.toString();
     }
