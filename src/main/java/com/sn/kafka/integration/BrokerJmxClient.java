@@ -45,6 +45,7 @@ public class BrokerJmxClient
             ObjectInstance instance = iterator.next ();
             System.out.println ("Class Name: " + instance.getClassName ());
             System.out.println ("Object Name: " + instance.getObjectName ());
+            System.out.println (mbsc.getAttribute (instance.getObjectName (),null).toString ());
          }
         return mbsc;
     }
