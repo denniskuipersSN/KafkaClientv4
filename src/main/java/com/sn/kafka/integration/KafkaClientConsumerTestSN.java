@@ -24,7 +24,7 @@ public class KafkaClientConsumerTestSN {
 
     private static Consumer<String, String> createNConsumer(Properties props) {
 
-        String topic = props.getProperty("topic");
+        String topic = props.getProperty("topicN");
         String ConsumerConfigFile = props.getProperty("ConsumerNConfgFile");
         if (props.containsKey ("javax.net.ssl.trustStore")) {
             System.setProperty("javax.net.ssl.trustStore",props.getProperty("javax.net.ssl.trustStore"));
