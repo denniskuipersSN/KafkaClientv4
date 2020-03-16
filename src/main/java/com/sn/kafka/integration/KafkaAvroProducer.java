@@ -27,7 +27,9 @@ public class KafkaAvroProducer {
     {
 
         String topic = producerProp.getProperty("topic");
-        String SchemaRegistryURL = producerProp.getProperty("schema_url");
+        String SchemaRegistryURL = "";
+        if (producerProp.containsKey ("schema_url"))
+           SchemaRegistryURL = producerProp.getProperty ("schema_url");
         String ProducerConfigFile = producerProp.getProperty("ProducerConfgFile");
 
         Properties props = new Properties();
@@ -48,7 +50,8 @@ public class KafkaAvroProducer {
         props.put(ProducerConfig.CLIENT_ID_CONFIG, topic);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, propsProducer.getProperty("key.serializer"));
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,propsProducer.getProperty("value.serializer"));
-        props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
+        if (!SchemaRegistryURL.isEmpty ())
+           props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
         KafkaProducer producer = new KafkaProducer(props);
         return producer;
 
