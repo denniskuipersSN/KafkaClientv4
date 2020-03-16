@@ -10,6 +10,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.config.SslConfigs;
 import org.apache.log4j.PropertyConfigurator;
 import com.google.gson.*;
+import com.google.gson.JsonSerializer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
