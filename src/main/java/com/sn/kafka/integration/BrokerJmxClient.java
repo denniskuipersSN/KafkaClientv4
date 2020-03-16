@@ -40,18 +40,27 @@ public class BrokerJmxClient
         return mbsc;
     }
 
-    public JmxReporter.MeterMBean createSocketMbean() throws Exception
+    public void createSocketMbean() throws Exception
     {
 
         MBeanServerConnection JMXServer = getMbeanConnection();
         Set<ObjectInstance> getAllBeans = JMXServer.queryMBeans (null,null);
         Iterator<ObjectInstance> iterator = getAllBeans.iterator();
+        JmxReporter.MeterMBean stats = null;
+        String Value = "";
         while (iterator.hasNext()) {
             ObjectInstance instance = iterator.next ();
-            System.out.println ("Class Name: " + instance.getClassName ());
-            System.out.println ("Object Name: " + instance.getObjectName ());
-            //Object mBeanProxy = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), instance.getClassName ().getClass (), true);
-            System.out.println (instance.getClassName ().getClass ());
+            if (instance.getClassName ().contains("Meter") ) {
+                stats = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), JmxReporter.MeterMBean.class, true);
+                Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
+                for (Object key : attributes.keySet ()) {
+                    if (key.toString ().contains ("name")) {
+                        Value = attributes.get (key.toString ()).toString ();
+                    }
+                }
+
+                System.out.println (Value + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate ());
+            }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
             //for (Object key : attributes.keySet ()) {
@@ -63,24 +72,14 @@ public class BrokerJmxClient
             //}
         }
 
-        ObjectName mbeanName = new ObjectName("kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec");
-        JmxReporter.MeterMBean stats  = JMX.newMBeanProxy(JMXServer, mbeanName, JmxReporter.MeterMBean.class, true);
-        return stats;
+        //ObjectName mbeanName = new ObjectName("kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec");
+        //JmxReporter.MeterMBean stats  = JMX.newMBeanProxy(JMXServer, mbeanName, JmxReporter.MeterMBean.class, true);
     }
-
-    //public String getBrokerStats() throws Exception
-    //{
-    //    StringBuffer buf = new StringBuffer();
-    //    JmxReporter.MeterMBean stats = createSocketMbean();
-    //    buf.append("count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate ()) ;
-    //    return buf.toString();
-    //}
-
 
 
     public static void main(String[] args) throws Exception {
         BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
-        JmxReporter.MeterMBean stats = JMXNew.createSocketMbean ();
+        JMXNew.createSocketMbean ();
         //System.out.println (JMXNew.getBrokerStats ());
         //System.out.println (getMBeanName("class", "kafka:type=kafka.SocketServerStats"));
     }
