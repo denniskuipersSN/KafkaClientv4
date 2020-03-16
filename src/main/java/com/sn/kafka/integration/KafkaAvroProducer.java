@@ -80,6 +80,8 @@ public class KafkaAvroProducer {
             System.out.println ("Flush");
             producer.flush ();
             System.out.println ("Finished flush");
+            System.out.println ("Finished flush");
+            System.out.println ("Finished flush");
         } catch (Exception e) {
             System.out.println (e);
         }
