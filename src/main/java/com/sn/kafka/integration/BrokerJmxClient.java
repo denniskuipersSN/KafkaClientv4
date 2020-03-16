@@ -61,7 +61,7 @@ public class BrokerJmxClient
                         Type = attributes.get (key.toString ()).toString ();
                 }
 
-                System.out.println (Type + " " + Name + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate ());
+                System.out.println (Type + " " + Name + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate () + " FiveMine Rate : " + stats.getFiveMinuteRate () + " FifteenMinuteRate :  " + stats.getFifteenMinuteRate () + " Unit : "  + stats.getRateUnit ());
             }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
