@@ -58,7 +58,7 @@ public class BrokerJmxClient
 
         JsonObject MeterMetric = new JsonObject();
 
-        String[] args = {"-configfile","src/main/java/resources/producerJsonformat.properties"};
+        String[] args = {"-configfile","src/main/java/resources/testJMXToKafkaTopic.properties"};
         Properties prop = KafkaAvroProducer.getConfigFile(args);
         KafkaProducer PClient = KafkaAvroProducer.ProducerClient(prop);
 
