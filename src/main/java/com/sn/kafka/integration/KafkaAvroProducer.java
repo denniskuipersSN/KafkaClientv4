@@ -101,16 +101,6 @@ public class KafkaAvroProducer {
             System.out.println ("Flush");
             producer.flush ();
             System.out.println ("Finished flush");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-            System.out.println ("Finished close");
-
-            System.out.println ("Finished close");
 
         } catch (Exception e) {
             System.out.println (e);
