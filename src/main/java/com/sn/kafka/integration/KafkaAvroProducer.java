@@ -88,9 +88,9 @@ public class KafkaAvroProducer {
         System.out.println ("Finished");
     }
 
-    public static void SendJsonMessage(KafkaProducer producer, JsonObject Json) {
+    public static void SendJsonMessage(KafkaProducer producer, String Json) {
         //System.out.println("Sending Message" + avroRecord.getSchema().toString());
-        ProducerRecord<String, JsonObject> record = new ProducerRecord<> ("MetricTopic", Json);
+        ProducerRecord<String, String> record = new ProducerRecord<> ("MetricTopic", Json);
         try {
             producer.send (record);
         } catch (Exception e) {

@@ -82,7 +82,7 @@ public class BrokerJmxClient
                 MeterMetric.addProperty ("FiveMinuteRate",stats.getFiveMinuteRate ());
                 MeterMetric.addProperty ("FifteenMinuteRate",stats.getFifteenMinuteRate ());
                 MeterMetric.addProperty ("Unit", String.valueOf (stats.getRateUnit ()));
-                KafkaAvroProducer.SendJsonMessage (PClient,MeterMetric);
+                KafkaAvroProducer.SendJsonMessage (PClient,MeterMetric.toString ());
 
                 System.out.println ("Send ; " + MeterMetric);
             }
