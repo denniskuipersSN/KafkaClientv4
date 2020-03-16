@@ -9,6 +9,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.config.SslConfigs;
 import org.apache.log4j.PropertyConfigurator;
+import com.google.gson.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +23,7 @@ public class KafkaAvroProducer {
 
     }
 
-    private static void ProducerClient(Properties producerProp)
+    public static KafkaProducer ProducerClient(Properties producerProp)
     {
 
         String topic = producerProp.getProperty("topic");
@@ -55,39 +56,63 @@ public class KafkaAvroProducer {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,propsProducer.getProperty("value.serializer"));
         props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
         KafkaProducer producer = new KafkaProducer(props);
+        return producer;
 
+    }
+    public static void SendAvroMessage(KafkaProducer producer) {
         String key = "key11";
         String userSchema = "{\"type\":\"record\"," +
                 "\"name\":\"myrecord\"," +
                 "\"fields\":[{\"name\":\"f1\",\"type\":\"string\"}]}";
-        Schema.Parser parser = new Schema.Parser();
-        Schema schema = parser.parse(userSchema);
-        GenericRecord avroRecord = new GenericData.Record(schema);
-        avroRecord.put("f1", "value1");
+        Schema.Parser parser = new Schema.Parser ();
+        Schema schema = parser.parse (userSchema);
+        GenericRecord avroRecord = new GenericData.Record (schema);
+        avroRecord.put ("f1", "value1");
         //System.out.println("Sending Message" + avroRecord.getSchema().toString());
-        ProducerRecord<String, GenericRecord> record = new ProducerRecord<>("testAvro12", key, avroRecord);
+        ProducerRecord<String, GenericRecord> record = new ProducerRecord<> ("testAvro12", key, avroRecord);
         try {
-            producer.send(record);
+            producer.send (record);
         } catch (Exception e) {
-             e.printStackTrace();
+            e.printStackTrace ();
             // may need to do something wth it
         }
         // When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
         // then close the producer to free its resources.
         try {
-            System.out.println("Flush");
-            producer.flush();
-            System.out.println("Finished flush");
-            producer.close();
-            System.out.println("Finished close");
-        }catch (Exception e)
-        {
-            System.out.println(e);
+            System.out.println ("Flush");
+            producer.flush ();
+            System.out.println ("Finished flush");
+            producer.close ();
+            System.out.println ("Finished close");
+        } catch (Exception e) {
+            System.out.println (e);
         }
-        System.out.println("Finished");
+        System.out.println ("Finished");
     }
 
-    private static Properties getConfigFile(String[] args){
+    public static void SendJsonMessage(KafkaProducer producer, JsonObject Json) {
+        //System.out.println("Sending Message" + avroRecord.getSchema().toString());
+        ProducerRecord<String, JsonObject> record = new ProducerRecord<> ("MetricTopic", Json);
+        try {
+            producer.send (record);
+        } catch (Exception e) {
+            e.printStackTrace ();
+            // may need to do something wth it
+        }
+        // When you're finished producing records, you can flush the producer to ensure it has all been written to Kafka and
+        // then close the producer to free its resources.
+        try {
+            System.out.println ("Flush");
+            producer.flush ();
+            System.out.println ("Finished flush");
+            producer.close ();
+            System.out.println ("Finished close");
+        } catch (Exception e) {
+            System.out.println (e);
+        }
+        System.out.println ("Finished");
+    }
+    public static Properties getConfigFile(String[] args){
         String Test = "111hallo11111111";
         CliArgs cliArgs = new CliArgs(args);
         String configfile   = cliArgs.switchValue("-configfile");
@@ -115,8 +140,8 @@ public class KafkaAvroProducer {
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
         Properties prop = getConfigFile(args);
-        KafkaAvroProducer kafkaAvroProducer = new KafkaAvroProducer();
-        kafkaAvroProducer.ProducerClient(prop);
+        KafkaProducer PClient = ProducerClient(prop);
+        SendAvroMessage(PClient);
         System.out.println("Done");
     }
 }

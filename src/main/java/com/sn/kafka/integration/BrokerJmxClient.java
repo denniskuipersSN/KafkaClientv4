@@ -10,6 +10,7 @@ import javax.management.remote.JMXServiceURL;
 
 import kafka.network.*;
 import org.apache.avro.data.Json;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.MetricName;
 import org.apache.kafka.common.utils.Sanitizer;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.Timestamp;
 import java.util.*;
+import com.sn.kafka.integration.KafkaAvroProducer;
 
 import com.yammer.metrics.reporting.*;
 
@@ -56,6 +58,10 @@ public class BrokerJmxClient
 
         JsonObject MeterMetric = new JsonObject();
 
+        String[] args = {"-configfile","src/main/java/resources/testSNKafka.properties"};
+        Properties prop = KafkaAvroProducer.getConfigFile(args);
+        KafkaProducer PClient = KafkaAvroProducer.ProducerClient(prop);
+
         while (iterator.hasNext()) {
             ObjectInstance instance = iterator.next ();
             if (instance.getClassName ().contains("Meter") ) {
@@ -76,7 +82,9 @@ public class BrokerJmxClient
                 MeterMetric.addProperty ("FiveMinuteRate",stats.getFiveMinuteRate ());
                 MeterMetric.addProperty ("FifteenMinuteRate",stats.getFifteenMinuteRate ());
                 MeterMetric.addProperty ("Unit", String.valueOf (stats.getRateUnit ()));
-                System.out.println (MeterMetric);
+                KafkaAvroProducer.SendJsonMessage (PClient,MeterMetric);
+
+                System.out.println ("Send ; " + MeterMetric);
             }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
