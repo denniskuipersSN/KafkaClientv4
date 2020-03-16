@@ -80,8 +80,6 @@ public class KafkaAvroProducer {
             System.out.println ("Flush");
             producer.flush ();
             System.out.println ("Finished flush");
-            producer.close ();
-            System.out.println ("Finished close");
         } catch (Exception e) {
             System.out.println (e);
         }
@@ -103,7 +101,6 @@ public class KafkaAvroProducer {
             System.out.println ("Flush");
             producer.flush ();
             System.out.println ("Finished flush");
-            producer.close ();
             System.out.println ("Finished close");
         } catch (Exception e) {
             System.out.println (e);
@@ -140,6 +137,7 @@ public class KafkaAvroProducer {
         Properties prop = getConfigFile(args);
         KafkaProducer PClient = ProducerClient(prop);
         SendAvroMessage(PClient);
+        PClient.close ();
         System.out.println("Done");
     }
 }
