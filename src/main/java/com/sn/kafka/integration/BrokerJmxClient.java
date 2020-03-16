@@ -80,6 +80,7 @@ public class BrokerJmxClient
 
     public static void main(String[] args) throws Exception {
         BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
+        JmxReporter.MeterMBean stats = JMXNew.createSocketMbean ();
         //System.out.println (JMXNew.getBrokerStats ());
         //System.out.println (getMBeanName("class", "kafka:type=kafka.SocketServerStats"));
     }
