@@ -9,12 +9,15 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 import kafka.network.*;
+import org.apache.avro.data.Json;
 import org.apache.kafka.common.MetricName;
 import org.apache.kafka.common.utils.Sanitizer;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import com.google.gson.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.security.Timestamp;
 import java.util.*;
 
 import com.yammer.metrics.reporting.*;
@@ -49,6 +52,10 @@ public class BrokerJmxClient
         JmxReporter.MeterMBean stats = null;
         String Name = "";
         String Type = "";
+        Date date = new Date();
+
+        JsonObject MeterMetric = new JsonObject();
+
         while (iterator.hasNext()) {
             ObjectInstance instance = iterator.next ();
             if (instance.getClassName ().contains("Meter") ) {
@@ -60,8 +67,16 @@ public class BrokerJmxClient
                     } else if(key.toString ().contains ("type"))
                         Type = attributes.get (key.toString ()).toString ();
                 }
-
-                System.out.println (Type + " " + Name + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate () + " FiveMine Rate : " + stats.getFiveMinuteRate () + " FifteenMinuteRate :  " + stats.getFifteenMinuteRate () + " Unit : "  + stats.getRateUnit ());
+                MeterMetric.addProperty ("timestamp",date.getTime());
+                MeterMetric.addProperty ("type",Type);
+                MeterMetric.addProperty ("type",Name);
+                MeterMetric.addProperty ("count",stats.getCount ());
+                MeterMetric.addProperty ("mean",stats.getMeanRate ());
+                MeterMetric.addProperty ("OneMinuteRate",stats.getOneMinuteRate ());
+                MeterMetric.addProperty ("FiveMinuteRate",stats.getFiveMinuteRate ());
+                MeterMetric.addProperty ("FifteenMinuteRate",stats.getFifteenMinuteRate ());
+                MeterMetric.addProperty ("Unit", String.valueOf (stats.getRateUnit ()));
+                System.out.println (MeterMetric);
             }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
