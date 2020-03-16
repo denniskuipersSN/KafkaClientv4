@@ -50,8 +50,8 @@ public class BrokerJmxClient
             ObjectInstance instance = iterator.next ();
             System.out.println ("Class Name: " + instance.getClassName ());
             System.out.println ("Object Name: " + instance.getObjectName ());
-            String mBeanProxy = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), instance.getClassName ().getClass (), true);
-            System.out.println (mBeanProxy);
+            //Object mBeanProxy = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), instance.getClassName ().getClass (), true);
+            System.out.println (instance.getClassName ().getClass ().toString ());
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
             //for (Object key : attributes.keySet ()) {
