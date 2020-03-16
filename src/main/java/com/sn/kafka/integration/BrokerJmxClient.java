@@ -47,7 +47,8 @@ public class BrokerJmxClient
         Set<ObjectInstance> getAllBeans = JMXServer.queryMBeans (null,null);
         Iterator<ObjectInstance> iterator = getAllBeans.iterator();
         JmxReporter.MeterMBean stats = null;
-        String Value = "";
+        String Name = "";
+        String Type = "";
         while (iterator.hasNext()) {
             ObjectInstance instance = iterator.next ();
             if (instance.getClassName ().contains("Meter") ) {
@@ -55,11 +56,12 @@ public class BrokerJmxClient
                 Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
                 for (Object key : attributes.keySet ()) {
                     if (key.toString ().contains ("name")) {
-                        Value = attributes.get (key.toString ()).toString ();
-                    }
+                        Name = attributes.get (key.toString ()).toString ();
+                    } else if(key.toString ().contains ("type"))
+                        Type = attributes.get (key.toString ()).toString ();
                 }
 
-                System.out.println (Value + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate ());
+                System.out.println (Type + " " + Name + " count : " + stats.getCount () + " mean : " + stats.getMeanRate () + " minute " + stats.getOneMinuteRate ());
             }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
