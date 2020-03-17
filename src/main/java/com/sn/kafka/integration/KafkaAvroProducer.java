@@ -27,7 +27,7 @@ public class KafkaAvroProducer {
     public static KafkaProducer ProducerClient(Properties producerProp)
     {
 
-        String topic = producerProp.getProperty("topicN");
+        String topic = producerProp.getProperty("topic");
         String SchemaRegistryURL = "";
         if (producerProp.containsKey ("schema_url"))
            SchemaRegistryURL = producerProp.getProperty ("schema_url");
