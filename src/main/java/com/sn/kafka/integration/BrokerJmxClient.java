@@ -45,7 +45,7 @@ public class BrokerJmxClient
         return mbsc;
     }
 
-    public void createSocketMbean() throws Exception
+    public void createSocketMbean(String[] configfile ) throws Exception
     {
 
         MBeanServerConnection JMXServer = getMbeanConnection();
@@ -55,11 +55,11 @@ public class BrokerJmxClient
         String Name = "";
         String Type = "";
         Date date = new Date();
-
         JsonObject MeterMetric = new JsonObject();
-
-        String[] args = {"-configfile","src/main/java/resources/testJMXToKafkaTopic.properties"};
-        Properties prop = KafkaAvroProducer.getConfigFile(args);
+        String[] configfileSRC = {"-configfile","src/main/java/resources/testJMXToKafkaTopic.properties"};
+        if (configfile.length == 0)
+            configfile = configfileSRC;
+        Properties prop = KafkaAvroProducer.getConfigFile(configfile);
         KafkaProducer PClient = KafkaAvroProducer.ProducerClient(prop);
 
         while (iterator.hasNext()) {
@@ -100,10 +100,18 @@ public class BrokerJmxClient
         //JmxReporter.MeterMBean stats  = JMX.newMBeanProxy(JMXServer, mbeanName, JmxReporter.MeterMBean.class, true);
     }
 
-
-    public static void main(String[] args) throws Exception {
+    public static int RunCollection(String[] configfile) throws Exception
+    {
+        System.setSecurityManager(null);
         BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
-        JMXNew.createSocketMbean ();
+        JMXNew.createSocketMbean (configfile);
+        return 0;
+    }
+    public static void main(String[] args) throws Exception {
+        System.setSecurityManager(null);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
+        String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
+        JMXNew.createSocketMbean (configfile);
         //System.out.println (JMXNew.getBrokerStats ());
         //System.out.println (getMBeanName("class", "kafka:type=kafka.SocketServerStats"));
     }
