@@ -188,14 +188,18 @@ public class KafkaClientConsumerTestSN {
 
         Properties prop = getConfigFile(args);
         System.setSecurityManager(null);
-        System.out.println("Start Consumer");
+        System.out.println("Start Consumer 1");
         return runConsumer(prop);
     }
 
-    public static int mainCaller() throws Exception {
-        String[] args = {"-configfile","src/main/java/resources/testSNKafka.properties"};
-        main(args);
-        return 10;
+    public static String mainCaller(String[] args) throws Exception {
+        String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
+        if (args.length == 0)
+            args = configfile;
+        Properties prop = getConfigFile(args);
+        String Messages = runNConsumer(prop);
+        System.out.println(Messages);
+        return Messages;
     }
 
     public static void main(String[] args) throws Exception {
@@ -205,8 +209,6 @@ public class KafkaClientConsumerTestSN {
              args = args1;
         Properties prop = getConfigFile(args);
         String Messages = runConsumer(prop);
-        System.out.println(Messages);
-        Messages = runNConsumer(prop);
         System.out.println(Messages);
     }
 

@@ -20,7 +20,9 @@ public class TestKafkaAvroProducer {
     @Test
     public void testKafkaClientConsumerTestSN()  throws Exception {
         // assert statements
-        assertEquals(10, KafkaClientConsumerTestSN.mainCaller ()) ;
+        String[] test = {""};
+        String Messages =  KafkaClientConsumerTestSN.mainCaller (test) ;
+
     }
     @Test
     public void testBrokerJmxClientN()  throws Exception {
