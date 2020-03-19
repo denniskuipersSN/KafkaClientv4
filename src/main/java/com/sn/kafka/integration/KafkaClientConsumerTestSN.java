@@ -188,7 +188,7 @@ public class KafkaClientConsumerTestSN {
 
         Properties prop = getConfigFile(args);
         System.setSecurityManager(null);
-        System.out.println("Start Consumer 111");
+        System.out.println("Start Consumer 11111");
         return runConsumer(prop);
     }
 
