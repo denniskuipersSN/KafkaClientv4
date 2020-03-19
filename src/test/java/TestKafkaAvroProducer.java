@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 public class TestKafkaAvroProducer {
 
-    //@Test
-    //public void testKafkaAvroProducer()  throws Exception {
+    @Test
+    public void testKafkaAvroProducer()  throws Exception {
     //    // assert statements
-    //    assertEquals(10, KafkaAvroProducer.mainCaller ()) ;
-    //}
+         assertEquals(10, KafkaAvroProducer.mainCaller ()) ;
+    }
 
     @Test
     public void testKafkaClientConsumerTestSN()  throws Exception {

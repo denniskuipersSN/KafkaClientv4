@@ -194,7 +194,7 @@ public class KafkaClientConsumerTestSN {
 
     public static String mainCaller(String[] args) throws Exception {
         String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
-        if (args.length == 0)
+        if (args.length == 1)
             args = configfile;
         Properties prop = getConfigFile(args);
         String Messages = runNConsumer(prop);
@@ -205,7 +205,7 @@ public class KafkaClientConsumerTestSN {
     public static void main(String[] args) throws Exception {
 
         String[] args1 = {"-configfile","src/main/java/resources/testSNKafka.properties"};
-        if (args.length == 0)
+        if (args.length == 1)
              args = args1;
         Properties prop = getConfigFile(args);
         String Messages = runConsumer(prop);
