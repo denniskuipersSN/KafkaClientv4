@@ -24,10 +24,10 @@ public class TestKafkaAvroProducer {
         String Messages =  KafkaClientConsumerTestSN.mainCaller (test) ;
 
     }
-    @Test
-    public void testBrokerJmxClientN()  throws Exception {
-        // assert statements
-        String[] test = {""};
-        BrokerJmxClient.main (test);
-    }
+    //@Test
+    //public void testBrokerJmxClientN()  throws Exception {
+    //    // assert statements
+    //    String[] test = {""};
+    //    BrokerJmxClient.main (test);
+    //}
 }
