@@ -8,7 +8,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import com.apple.eawt.AppEvent;
+//import com.apple.eawt.AppEvent;
 import kafka.network.*;
 import org.apache.avro.data.Json;
 import org.apache.kafka.clients.producer.KafkaProducer;
