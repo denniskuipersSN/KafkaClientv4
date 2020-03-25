@@ -8,6 +8,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import com.apple.eawt.AppEvent;
 import kafka.network.*;
 import org.apache.avro.data.Json;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -23,6 +24,8 @@ import java.util.*;
 import com.sn.kafka.integration.KafkaAvroProducer;
 
 import com.yammer.metrics.reporting.*;
+
+import static java.lang.System.exit;
 
 public class BrokerJmxClient
 {
@@ -61,31 +64,40 @@ public class BrokerJmxClient
             configfile = configfileSRC;
         Properties prop = KafkaAvroProducer.getConfigFile(configfile);
         KafkaProducer PClient = KafkaAvroProducer.ProducerClient(prop);
+        while (true)
+        {
+          try{
+            while (iterator.hasNext()) {
+              ObjectInstance instance = iterator.next ();
+              if (instance.getClassName ().contains ("Meter")) {
+                  stats = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), JmxReporter.MeterMBean.class, true);
+                  Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
+                  for (Object key : attributes.keySet ()) {
+                      if (key.toString ().contains ("name")) {
+                          Name = attributes.get (key.toString ()).toString ();
+                      } else if (key.toString ().contains ("type"))
+                          Type = attributes.get (key.toString ()).toString ();
+                  }
+                  MeterMetric.addProperty ("timestamp", date.getTime ());
+                  MeterMetric.addProperty ("type", Type);
+                  MeterMetric.addProperty ("type", Name);
+                  MeterMetric.addProperty ("count", stats.getCount ());
+                  MeterMetric.addProperty ("mean", stats.getMeanRate ());
+                  MeterMetric.addProperty ("OneMinuteRate", stats.getOneMinuteRate ());
+                  MeterMetric.addProperty ("FiveMinuteRate", stats.getFiveMinuteRate ());
+                  MeterMetric.addProperty ("FifteenMinuteRate", stats.getFifteenMinuteRate ());
+                  MeterMetric.addProperty ("Unit", String.valueOf (stats.getRateUnit ()));
+                  KafkaAvroProducer.SendJsonMessage (PClient, MeterMetric.toString ());
 
-        while (iterator.hasNext()) {
-            ObjectInstance instance = iterator.next ();
-            if (instance.getClassName ().contains("Meter") ) {
-                stats = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), JmxReporter.MeterMBean.class, true);
-                Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
-                for (Object key : attributes.keySet ()) {
-                    if (key.toString ().contains ("name")) {
-                        Name = attributes.get (key.toString ()).toString ();
-                    } else if(key.toString ().contains ("type"))
-                        Type = attributes.get (key.toString ()).toString ();
-                }
-                MeterMetric.addProperty ("timestamp",date.getTime());
-                MeterMetric.addProperty ("type",Type);
-                MeterMetric.addProperty ("type",Name);
-                MeterMetric.addProperty ("count",stats.getCount ());
-                MeterMetric.addProperty ("mean",stats.getMeanRate ());
-                MeterMetric.addProperty ("OneMinuteRate",stats.getOneMinuteRate ());
-                MeterMetric.addProperty ("FiveMinuteRate",stats.getFiveMinuteRate ());
-                MeterMetric.addProperty ("FifteenMinuteRate",stats.getFifteenMinuteRate ());
-                MeterMetric.addProperty ("Unit", String.valueOf (stats.getRateUnit ()));
-                KafkaAvroProducer.SendJsonMessage (PClient,MeterMetric.toString ());
-
-                System.out.println ("Send ; " + MeterMetric);
+                  System.out.println ("Send ; " + MeterMetric);
+              }
             }
+              Thread.sleep (300000);
+           }catch (Exception e)
+          {
+              System.out.println (e);
+              exit(1);
+          }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
             //System.out.println (instance.getObjectName ().getKeyPropertyListString ());
             //for (Object key : attributes.keySet ()) {

@@ -18,6 +18,8 @@ import java.util.Properties;
 
 public class KafkaClientConsumerTestSN {
 
+    private static Integer duration = 10;
+
     public KafkaClientConsumerTestSN() {
 
     }
@@ -72,6 +74,7 @@ public class KafkaClientConsumerTestSN {
     private static Consumer<String, GenericRecord> createConsumer(Properties props) {
 
         String topic = props.getProperty("topic");
+        duration = Integer.parseInt (props.getProperty ("duration"));
         String SchemaRegistryURL = props.getProperty("schema_url");
         String ConsumerConfigFile = props.getProperty("ConsumerConfgFile");
         if (props.containsKey ("javax.net.ssl.trustStore")) {
@@ -121,9 +124,9 @@ public class KafkaClientConsumerTestSN {
     private static String runConsumer(Properties prop) throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder(100);
         try (Consumer<String, GenericRecord> consumer = createConsumer(prop)) {
-            Duration duration = Duration.ofSeconds(10);
+            Duration duration1 = Duration.ofSeconds(duration);
             try {
-                    ConsumerRecords<String, GenericRecord> records = consumer.poll(duration);
+                    ConsumerRecords<String, GenericRecord> records = consumer.poll(duration1);
                     for (ConsumerRecord<String, GenericRecord> record : records) {
                         System.out.printf("offset = %d, key = %s, value = %s \n", record.offset(), record.key(), record.value());
                         stringBuilder.append(","+record.value());
