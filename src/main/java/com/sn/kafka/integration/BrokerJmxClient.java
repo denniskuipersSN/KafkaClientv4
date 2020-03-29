@@ -9,6 +9,7 @@ import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
 //import com.apple.eawt.AppEvent;
+import com.yammer.metrics.reporting.JmxReporter;
 import kafka.network.*;
 import org.apache.avro.data.Json;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -23,8 +24,9 @@ import java.security.Timestamp;
 import java.util.*;
 import com.sn.kafka.integration.KafkaAvroProducer;
 
-import com.yammer.metrics.reporting.*;
+//import com.yammer.metrics.reporting.AbstractReporter.*;
 
+import static com.yammer.metrics.reporting.JmxReporter.*;
 import static java.lang.System.exit;
 
 public class BrokerJmxClient
@@ -70,7 +72,7 @@ public class BrokerJmxClient
             while (iterator.hasNext()) {
               ObjectInstance instance = iterator.next ();
               if (instance.getClassName ().contains ("Meter")) {
-                  stats = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), JmxReporter.MeterMBean.class, true);
+                  stats = JMX.newMBeanProxy (JMXServer, instance.getObjectName (), MeterMBean.class, true);
                   Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
                   for (Object key : attributes.keySet ()) {
                       if (key.toString ().contains ("name")) {
@@ -92,7 +94,7 @@ public class BrokerJmxClient
                   System.out.println ("Send ; " + MeterMetric);
               }
             }
-              Thread.sleep (300000);
+              Thread.sleep (3000000);
            }catch (Exception e)
           {
               System.out.println (e);
