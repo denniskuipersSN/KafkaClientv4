@@ -102,7 +102,7 @@ public class BrokerJmxClient
               System.out.println ("For Testing purpose 123444  ");
               System.out.println ("For Testing purpose 123444  ");
               System.out.println ("For Testing purpose 123444  ");
-              System.out.println ("For Testing purpose 123444  ");
+              System.out.println ("For Testing purpose 1234  ");
 
               exit(1);
           }
