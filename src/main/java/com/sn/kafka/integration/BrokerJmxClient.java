@@ -98,7 +98,7 @@ public class BrokerJmxClient
            }catch (Exception e)
           {
               System.out.println (e);
-              System.out.println ("For Testing purpose  ");
+              System.out.println ("For Testing purpose 1234  ");
               exit(1);
           }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
