@@ -94,11 +94,11 @@ public class BrokerJmxClient
                   System.out.println ("Send ; " + MeterMetric);
               }
             }
-              Thread.sleep (30000000);
+              Thread.sleep (300000);
            }catch (Exception e)
           {
               System.out.println (e);
-              System.out.println ("For Testing purpose ");
+              System.out.println ("For Testing purpose  ");
               exit(1);
           }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
