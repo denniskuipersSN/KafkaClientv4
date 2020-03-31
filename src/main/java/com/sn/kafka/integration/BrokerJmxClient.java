@@ -118,13 +118,13 @@ public class BrokerJmxClient
     public static int RunCollection(String[] configfile) throws Exception
     {
         System.setSecurityManager(null);
-        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.731",9111,1);
         JMXNew.createSocketMbean (configfile);
         return 0;
     }
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
-        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.731",9111,1);
         String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         JMXNew.createSocketMbean (configfile);
         //System.out.println (JMXNew.getBrokerStats ());
