@@ -102,7 +102,13 @@ public class BrokerJmxClient
            }catch (Exception e)
           {
               System.out.println (e);
-              System.out.println ("For Testing purpose 1234  ");
+              System.out.println ("For Testing purpose");
+              System.out.println ("For Testing purpose");
+              System.out.println ("For Testing purpose");
+              System.out.println ("For Testing purpose");
+              System.out.println ("For Testing purpose");
+              System.out.println ("For Testing purpose");
+
               exit(1);
           }
             //Hashtable attributes = instance.getObjectName ().getKeyPropertyList ();
@@ -122,13 +128,13 @@ public class BrokerJmxClient
     public static int RunCollection(String[] configfile) throws Exception
     {
         System.setSecurityManager(null);
-        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.731",9111,1);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
         JMXNew.createSocketMbean (configfile);
         return 0;
     }
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
-        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.731",9111,1);
+        BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
         String[] configfile = {"-configfile", "src/main/java/resources/testSNKafka.properties"};
         if (args.length == 2){
             configfile = args;
