@@ -94,7 +94,8 @@ public class BrokerJmxClient
                   System.out.println ("Send ; " + MeterMetric);
               }
             }
-              Thread.sleep (3000000);
+              break;
+              //Thread.sleep (3000000);
            }catch (Exception e)
           {
               System.out.println (e);
