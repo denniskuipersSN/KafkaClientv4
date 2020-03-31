@@ -22,6 +22,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.Timestamp;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import com.sn.kafka.integration.KafkaAvroProducer;
 
 //import com.yammer.metrics.reporting.AbstractReporter.*;
@@ -55,7 +57,7 @@ public class BrokerJmxClient
 
         MBeanServerConnection JMXServer = getMbeanConnection();
         Set<ObjectInstance> getAllBeans = JMXServer.queryMBeans (null,null);
-        Iterator<ObjectInstance> iterator = getAllBeans.iterator();
+        //Iterator<ObjectInstance> iterator = getAllBeans.iterator();
         JmxReporter.MeterMBean stats = null;
         String Name = "";
         String Type = "";
@@ -68,6 +70,7 @@ public class BrokerJmxClient
         KafkaProducer PClient = KafkaAvroProducer.ProducerClient(prop);
         while (true)
         {
+            Iterator<ObjectInstance> iterator = getAllBeans.iterator();
           try{
             while (iterator.hasNext()) {
               ObjectInstance instance = iterator.next ();
@@ -94,7 +97,8 @@ public class BrokerJmxClient
                   System.out.println ("Send ; " + MeterMetric);
               }
             }
-            Thread.sleep (3000000);
+            break;
+            //TimeUnit.SECONDS.sleep(30);
            }catch (Exception e)
           {
               System.out.println (e);
@@ -125,7 +129,10 @@ public class BrokerJmxClient
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
         BrokerJmxClient JMXNew =  new BrokerJmxClient("172.31.31.73",9111,1);
-        String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
+        String[] configfile = {"-configfile", "src/main/java/resources/testSNKafka.properties"};
+        if (args.length == 2){
+            configfile = args;
+        }
         JMXNew.createSocketMbean (configfile);
         //System.out.println (JMXNew.getBrokerStats ());
         //System.out.println (getMBeanName("class", "kafka:type=kafka.SocketServerStats"));
