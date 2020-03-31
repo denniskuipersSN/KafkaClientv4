@@ -196,6 +196,7 @@ public class KafkaClientConsumerTestSN {
     }
 
     public static String mainCaller(String[] args) throws Exception {
+        System.setSecurityManager(null);
         String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         if (args.length == 1)
             args = configfile;
@@ -206,7 +207,7 @@ public class KafkaClientConsumerTestSN {
     }
 
     public static void main(String[] args) throws Exception {
-
+        System.setSecurityManager(null);
         String[] args1 = {"-configfile","src/main/java/resources/testSNKafka.properties"};
         if (args.length == 1)
              args = args1;
