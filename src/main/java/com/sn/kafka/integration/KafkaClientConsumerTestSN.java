@@ -181,7 +181,8 @@ public class KafkaClientConsumerTestSN {
                         }
 
                     }
-                    stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
+                    if (stringBuilder.length () > 2)
+                       stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
                     System.out.println("Reading done :" + records.count());
             } catch (Exception e){
                 e.printStackTrace();
@@ -331,6 +332,7 @@ public class KafkaClientConsumerTestSN {
             if (args[0].contains ("runKafkaClient")) {
                 System.out.println ("Executing runKafkaClient");
                 Messages = runKafkaClient (newArgs);
+                System.out.println(Messages);
                 System.exit (0);
             }
             if (args[0].contains ("getStats")) {
