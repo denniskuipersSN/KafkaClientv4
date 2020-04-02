@@ -30,4 +30,10 @@ public class TestKafkaAvroProducer {
         String[] test = {""};
         BrokerJmxClient.main (test);
     }
+    @Test
+    public void teestSTats()  throws Exception {
+        //    // assert statements
+        String[] args = {"-configfile","src/main/java/resources/testJMXToKafkaTopic.properties"};
+        KafkaClientConsumerTestSN.getStats (args);
+    }
 }
