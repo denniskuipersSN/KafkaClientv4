@@ -313,7 +313,7 @@ public class KafkaClientConsumerTestSN {
     public static String mainCaller(String[] args) throws Exception {
         System.setSecurityManager(null);
         String[] configfile = {"-configfile","src/main/java/resources/testSNKafka.properties"};
-        if (args.length == 0)
+        if (args.length == 1)
             args = configfile;
         Properties prop = getConfigFile(args);
         String Messages = runNConsumer(prop);
