@@ -184,6 +184,7 @@ public class KafkaClientConsumerTestSN {
                     if (stringBuilder.length () > 2)
                        stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
                     System.out.println("Reading done :" + records.count());
+                System.out.println("Reading done :" + records.count());
             } catch (Exception e){
                 e.printStackTrace();
             }
