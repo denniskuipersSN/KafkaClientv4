@@ -126,6 +126,7 @@
                             <mainClass>com.sn.kafka.integration.KafkaAvroProducer</mainClass>
                             <classpathScope>test</classpathScope>
                             <arguments>
+                                   <argument>getStats</argument>
                                    <argument>-configfile</argument>
                                    <argument>src/main/java/resources/testSNKafka.properties</argument>
                             </arguments>
