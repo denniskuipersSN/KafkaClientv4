@@ -1,6 +1,7 @@
 package com.sn.kafka.integration;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
+import kafka.utils.Json;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.Metric;
@@ -164,7 +165,6 @@ public class KafkaClientConsumerTestSN {
 
     private static String runConsumer(Properties prop) throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder(100);
-        stringBuilder.append ("[");
         try (Consumer<String, GenericRecord> consumer = createConsumer(prop)) {
             // add kafka producer stats, which are rates
             Duration duration1 = Duration.ofSeconds(duration);
@@ -177,7 +177,7 @@ public class KafkaClientConsumerTestSN {
                         stringBuilder.append(record.value() + "}}");
                         if( records.iterator ().hasNext ())
                         {
-                            stringBuilder.append ("," + "\n");
+                            stringBuilder.append ("\n");
                         }
 
                     }
@@ -194,15 +194,13 @@ public class KafkaClientConsumerTestSN {
         }catch (Exception e){
             e.printStackTrace();
         }
-        stringBuilder.append ("]");
         return stringBuilder.toString();
     }
 
-    public static void getStats(String[] args){
+    public static String getStats(String[] args){
         System.setSecurityManager(null);
         Properties prop = getConfigFile(args);
         StringBuilder sb = new StringBuilder();
-        sb.append ("[");
         System.out.println ("test stats");
         Date date = new Date();
         try (Consumer<String, GenericRecord> consumer = createConsumer(prop)) {
@@ -231,7 +229,7 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\"topic\" : \"").append (partitionInfo.topic ()).append ("\",");
                 sb.append ("\"value\" : \"").append (endoffset);
                 sb.append ("\"}}}");
-                sb.append ("," + "\n");
+                sb.append ("\n");
 
                 sb.append ("{\"record\" : {\"data\" : {");
                 sb.append ("\"name\" : \"beginOffsets\"," );
@@ -241,7 +239,7 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\"topic\" : \"").append (partitionInfo.topic ()).append ("\",");
                 sb.append ("\"value\" : \"").append (beginoffset );
                 sb.append ("\"}}}");
-                sb.append ("," + "\n");
+                sb.append ("\n");
             }
             for( Map.Entry<MetricName, ? extends Metric> me : metrics.entrySet () ) {
                 sb.append("{\"record\" : {\"data\" : {" );
@@ -254,12 +252,12 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\"tags\" : \"").append (me.getKey ().tags ()).append ("\",");
                 sb.append ("\"value\" : \"").append (me.getValue ().metricValue ().toString ());
                 sb.append("\"}}}");
-                sb.append ("," + "\n");
+                sb.append ("\n");
             }
         }
         sb.replace (sb.length ()-2,sb.length ()-1,"");
-        sb.append ("]");
         System.out.println (sb.toString ());
+        return sb.toString ();
     }
 
     private static String runNConsumer(Properties prop) throws InterruptedException {
@@ -309,6 +307,13 @@ public class KafkaClientConsumerTestSN {
         Properties prop = getConfigFile(args);
         System.setSecurityManager(null);
         System.out.println("Start Consumer 1111");
+        System.out.println("Start Consumer 1111");
+        System.out.println("Start Consumer 1111");
+        System.out.println("Start Consumer 1111");        System.out.println("Start Consumer 1111");
+        System.out.println("Start Consumer 1111");        System.out.println("Start Consumer 1111");
+
+
+
         return runConsumer(prop);
     }
 
@@ -326,6 +331,7 @@ public class KafkaClientConsumerTestSN {
     public static void main(String[] args) throws Exception {
         System.setSecurityManager(null);
         String Messages = "";
+        String OutputJson = "";
         String[] newArgs = {args[1],args[2]};
         //System.out.println(args[0] + " "  + args[1] + " " + args[2] + " " + args.length);
         String[] args1 = {"-configfile","src/main/java/resources/testSNKafka.properties"};
@@ -334,19 +340,19 @@ public class KafkaClientConsumerTestSN {
                 System.out.println ("Executing runKafkaClient");
                 Messages = runKafkaClient (newArgs);
                 System.out.println(Messages);
-                System.exit (0);
             }
             if (args[0].contains ("getStats")) {
                 System.out.println ("Executing getStats");
-                getStats (newArgs);
-                System.exit (0);
-            }
+                OutputJson = getStats (newArgs);
+               }
         }
-        if (args.length == 0)
-           args = args1;
-        Properties prop = getConfigFile(args);
-        Messages = runConsumer(prop);
-        System.out.println(Messages);
+        else {
+            if (args.length == 0)
+                args = args1;
+            Properties prop = getConfigFile (args);
+            Messages = runConsumer (prop);
+            System.out.println (Messages);
+        }
     }
 
 }
