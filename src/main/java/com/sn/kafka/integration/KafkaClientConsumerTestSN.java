@@ -1,7 +1,10 @@
 package com.sn.kafka.integration;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
+import kafka.cluster.Broker;
 import kafka.utils.Json;
+import kafka.utils.ZkUtils;
+import org.I0Itec.zkclient.ZkClient;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.Metric;
@@ -10,6 +13,7 @@ import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.SslConfigs;
 import org.apache.log4j.PropertyConfigurator;
+import scala.collection.JavaConversions;
 import scala.util.parsing.combinator.testing.Str;
 
 import java.io.FileInputStream;
@@ -197,16 +201,17 @@ public class KafkaClientConsumerTestSN {
         return stringBuilder.toString();
     }
 
-    public static String getStats(String[] args){
+    public static String getStats(String[] args) throws Exception {
         System.setSecurityManager(null);
         Properties prop = getConfigFile(args);
         StringBuilder sb = new StringBuilder();
         System.out.println ("test stats");
         Date date = new Date();
+        String host = "";
+
         try (Consumer<String, GenericRecord> consumer = createConsumer(prop)) {
             Map<org.apache.kafka.common.MetricName, ? extends org.apache.kafka.common.Metric> metrics = consumer.metrics();
             Duration duration = Duration.ofSeconds(0);
-            consumer.poll (duration);
             Map<String, List<PartitionInfo>> topics = consumer.listTopics();
             List<PartitionInfo> partitionInfos = topics.get(prop.getProperty ("topic"));
             for (PartitionInfo partitionInfo : partitionInfos) {
@@ -221,7 +226,8 @@ public class KafkaClientConsumerTestSN {
                 if (beginOffsets.containsKey(inputPartition)) {
                     beginoffset = beginOffsets.get(inputPartition);
                 }
-                sb.append ("{\"record\" : {\"data\" : {");
+                host = partitionInfo.leader ().host ();
+                sb.append ("{\"record\" : {\"host\" : \"" + host + "\" \"data\" : {");
                 sb.append ("\"name\" : \"endoffset\"," );
                 sb.append ("\"timestamp\" : \"").append (date.getTime ()).append ("\",");
                 sb.append ("\"partition\" : \"").append (partitionInfo.partition ()).append ("\",");
@@ -231,7 +237,7 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\"}}}");
                 sb.append ("\n");
 
-                sb.append ("{\"record\" : {\"data\" : {");
+                sb.append ("{\"record\" : {\"host\" : \"" + host + "\" \"data\" : {");
                 sb.append ("\"name\" : \"beginOffsets\"," );
                 sb.append ("\"timestamp\" : \"").append (date.getTime ()).append ("\",");
                 sb.append ("\"partition\" : \"").append (partitionInfo.partition ()).append ("\",");
@@ -241,8 +247,11 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\"}}}");
                 sb.append ("\n");
             }
+
+
             for( Map.Entry<MetricName, ? extends Metric> me : metrics.entrySet () ) {
-                sb.append("{\"record\" : {\"data\" : {" );
+
+                sb.append ("{\"record\" : {\"host\" : \"" + host + "\" \"data\" : {");
                 //System.out.printf("offset = %d, key = %s, value = %s \n", record.offset(), record.key(), record.value());
                 //System.out.println (record.offset () + " "  + record.partition () + " " + record.headers ());
                 sb.append ("\"name\" : \"").append (me.getKey ().name ()).append ("\",");
@@ -255,7 +264,7 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\n");
             }
         }
-        sb.replace (sb.length ()-2,sb.length ()-1,"");
+        sb.delete (sb.length ()-1,sb.length ()-1);
         System.out.println (sb.toString ());
         return sb.toString ();
     }
