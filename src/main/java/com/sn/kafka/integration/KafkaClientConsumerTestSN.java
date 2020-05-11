@@ -28,7 +28,11 @@ import static java.util.Collections.singleton;
 
 public class KafkaClientConsumerTestSN {
 
-    private static Integer duration = 10;
+    private static int duration = 10;
+    private static String Topic = "";
+    private static String log4jfile = "";
+    private static boolean commandline = false;
+
 
     public KafkaClientConsumerTestSN() {
 
@@ -82,41 +86,46 @@ public class KafkaClientConsumerTestSN {
     }
 
     private static Consumer<String, GenericRecord> createConsumer(Properties props) {
+        Properties propsConsumer = new Properties ();
+        if(!commandline) {
+           String Topic = props.getProperty ("topic");
+           duration = Integer.parseInt (props.getProperty ("duration"));
+           String SchemaRegistryURL = props.getProperty ("schema_url");
+           String ConsumerConfigFile = props.getProperty ("ConsumerConfgFile");
+           if (props.containsKey ("javax.net.ssl.trustStore")) {
+               System.setProperty ("javax.net.ssl.trustStore", props.getProperty ("javax.net.ssl.trustStore"));
+               System.setProperty ("javax.net.ssl.trustStorePassword", props.getProperty ("javax.net.ssl.trustStorePassword"));
+               System.setProperty ("javax.net.ssl.keyStore", props.getProperty ("javax.net.ssl.keyStore"));
+               System.setProperty ("javax.net.ssl.keyStorePassword", props.getProperty ("javax.net.ssl.keyStorePassword"));
+           }
 
-        String topic = props.getProperty("topic");
-        duration = Integer.parseInt (props.getProperty ("duration"));
-        String SchemaRegistryURL = props.getProperty("schema_url");
-        String ConsumerConfigFile = props.getProperty("ConsumerConfgFile");
-        if (props.containsKey ("javax.net.ssl.trustStore")) {
-          System.setProperty("javax.net.ssl.trustStore",props.getProperty("javax.net.ssl.trustStore"));
-          System.setProperty("javax.net.ssl.trustStorePassword",props.getProperty("javax.net.ssl.trustStorePassword"));
-          System.setProperty("javax.net.ssl.keyStore",props.getProperty("javax.net.ssl.keyStore"));
-          System.setProperty("javax.net.ssl.keyStorePassword",props.getProperty("javax.net.ssl.keyStorePassword"));
+           try (InputStream input = new FileInputStream (ConsumerConfigFile)) {
+
+               propsConsumer.load (input);
+               //if (propsConsumer.containsKey("ssl.truststore.location")) {
+               //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, props.getProperty("ssl.truststore.location"));
+               //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, props.getProperty("ssl.truststore.password"));
+               //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, props.getProperty("ssl.keystore.location"));
+               //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, props.getProperty("ssl.key.password"));
+               //}
+               propsConsumer.put ("bootstrap.servers", propsConsumer.get ("bootstrap.servers"));
+               propsConsumer.put (ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+               propsConsumer.put (ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, propsConsumer.getProperty ("key.deserializer"));
+               propsConsumer.put (ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, propsConsumer.getProperty ("value.deserializer"));
+               propsConsumer.put (KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
+               propsConsumer.put (ConsumerConfig.GROUP_ID_CONFIG, propsConsumer.getProperty ("group.id"));
+
+               for (Object key : propsConsumer.keySet ()) {
+                   System.out.println (key + ": " + propsConsumer.getProperty (key.toString ()));
+               }
+
+           } catch (IOException io) {
+               io.printStackTrace ();
+           }
         }
-
-        Properties propsConsumer = new Properties();
-        try (InputStream input = new FileInputStream(ConsumerConfigFile)) {
-
-            propsConsumer.load(input);
-            //if (propsConsumer.containsKey("ssl.truststore.location")) {
-            //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, props.getProperty("ssl.truststore.location"));
-            //    propsConsumer.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, props.getProperty("ssl.truststore.password"));
-            //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, props.getProperty("ssl.keystore.location"));
-            //    propsConsumer.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, props.getProperty("ssl.key.password"));
-            //}
-            propsConsumer.put("bootstrap.servers",propsConsumer.get("bootstrap.servers"));
-            propsConsumer.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-            propsConsumer.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,propsConsumer.getProperty("key.deserializer"));
-            propsConsumer.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, propsConsumer.getProperty("value.deserializer"));
-            propsConsumer.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SchemaRegistryURL);
-            propsConsumer.put(ConsumerConfig.GROUP_ID_CONFIG, propsConsumer.getProperty("group.id"));
-
-            for (Object key: propsConsumer.keySet()) {
-                System.out.println(key + ": " + propsConsumer.getProperty(key.toString()));
-            }
-
-        }catch (IOException io) {
-            io.printStackTrace();
+        else
+        {
+            propsConsumer = props;
         }
         //String groupid = props.getProperty("group1");
         // Create the consumer using props.
@@ -124,10 +133,10 @@ public class KafkaClientConsumerTestSN {
         //Consumer<String,String> consumer = new KafkaConsumer<String, String>(props);
 
         // Subscribe to the topic.
-        consumer.subscribe(Arrays.asList(topic));
+        consumer.subscribe(Arrays.asList(Topic));
         //consumer.subscribe(Collections.singletonList(topic));
         //System.out.println(consumer.listTopics());
-        System.out.println("Connected and connected to topic : " + topic);
+        System.out.println("Connected and connected to topic : " + Topic);
         return consumer;
     }
 
@@ -158,7 +167,7 @@ public class KafkaClientConsumerTestSN {
         long retval = 0;
         for (TopicPartition partition : beginning.keySet()) {
             Long beginningOffset = beginning.get(partition);
-            Long endingOffset = ending.get(partition);
+            Long endingOffset = ending.get(partition);  
             System.out.println("Begin = " + beginningOffset + ", end = " + endingOffset + " for partition " + partition);
             if (beginningOffset != null && endingOffset != null) {
                 retval += (endingOffset - beginningOffset);
@@ -188,7 +197,6 @@ public class KafkaClientConsumerTestSN {
                     if (stringBuilder.length () > 2)
                        stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
                     System.out.println("Reading done :" + records.count());
-                System.out.println("Reading done :" + records.count());
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -198,7 +206,8 @@ public class KafkaClientConsumerTestSN {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return stringBuilder.toString();
+        String Records = stringBuilder.toString ().replaceAll ("[\\r\\n]$", "");
+        return Records.replaceAll ("[\\r\\n]$", "");
     }
 
     public static String getStats(String[] args) throws Exception {
@@ -238,7 +247,7 @@ public class KafkaClientConsumerTestSN {
                 sb.append ("\n");
 
                 sb.append ("{\"record\" : {\"host\" : \"" + host + "\" \"data\" : {");
-                sb.append ("\"name\" : \"beginOffsets\"," );
+                        sb.append ("\"name\" : \"beginOffsets\"," );
                 sb.append ("\"timestamp\" : \"").append (date.getTime ()).append ("\",");
                 sb.append ("\"partition\" : \"").append (partitionInfo.partition ()).append ("\",");
                 sb.append ("\"description\" : \"").append ("beginOffsets").append ("\",");
@@ -311,18 +320,43 @@ public class KafkaClientConsumerTestSN {
         return prop;
     }
 
+    private static Properties getCommandlineProp(String[] args){
+        commandline = true;
+        Properties prop = new Properties ();
+        CliArgs cliArgs = new CliArgs(args);
+        duration = Integer.parseInt (cliArgs.switchValue ("-duration"));
+        prop.setProperty ("bootstrap.servers",cliArgs.switchValue("-bootstrap.servers"));
+        Topic = cliArgs.switchValue("-topic");
+        prop.setProperty ("group.id",cliArgs.switchValue("-group.id"));
+        log4jfile = cliArgs.switchValue("-log4jfile");
+        prop.setProperty ("SCHEMA_REGISTRY_URL_CONFIG",cliArgs.switchValue("-schema_url"));
+        prop.setProperty ("key.deserializer", cliArgs.switchValue("-key.deserializer"));
+        prop.setProperty ("value.deserializer",cliArgs.switchValue("-value.deserializer"));
+        prop.setProperty ("max.poll.records",cliArgs.switchValue("-max.poll.records"));
+        prop.setProperty ("auto.offset.reset",cliArgs.switchValue("-auto.offset.reset"));
+        prop.setProperty ("security.protocol",cliArgs.switchValue("-security.protocol"));
+        prop.setProperty ("ssl.truststore.location",cliArgs.switchValue("-ssl.truststore.location"));
+        prop.setProperty ("ssl.truststore.password",cliArgs.switchValue("-ssl.truststore.password"));
+        prop.setProperty ("ssl.keystore.location",cliArgs.switchValue("-ssl.keystore.location"));
+        prop.setProperty ("ssl.keystore.password",cliArgs.switchValue("-ssl.keystore.password"));
+        prop.setProperty ("ssl.key.password",cliArgs.switchValue("-ssl.key.password"));
+        prop.setProperty ("schema.registry.ssl.key.password",cliArgs.switchValue("-schema.registry.ssl.key.password"));
+        prop.setProperty ("schema.registry.ssl.keystore.location",cliArgs.switchValue("-schema.registry.ssl.keystore.location"));
+        prop.setProperty ("schema.registry.ssl.keystore.password",cliArgs.switchValue("-schema.registry.ssl.keystore.password"));
+        prop.setProperty ("schema.registry.ssl.truststore.location",cliArgs.switchValue("-schema.registry.ssl.truststore.location"));
+        prop.setProperty ("schema.registry.ssl.truststore.password",cliArgs.switchValue("-schema.registry.ssl.truststore.password"));
+        prop.setProperty ("AUTO_OFFSET_RESET_CONFIG",cliArgs.switchValue("-auto.offset.reset.config"));
+
+        return prop;
+    }
     public static String runKafkaClient(String[] args) throws Exception {
 
-        Properties prop = getConfigFile(args);
+        Properties prop = new Properties ();
+        if ( args.length == 2)
+            prop = getConfigFile(args);
+        else
+            prop = getCommandlineProp(args);
         System.setSecurityManager(null);
-        System.out.println("Start Consumer 1111");
-        System.out.println("Start Consumer 1111");
-        System.out.println("Start Consumer 1111");
-        System.out.println("Start Consumer 1111");        System.out.println("Start Consumer 1111");
-        System.out.println("Start Consumer 1111");        System.out.println("Start Consumer 1111");
-
-
-
         return runConsumer(prop);
     }
 
