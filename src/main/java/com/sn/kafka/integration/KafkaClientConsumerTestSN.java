@@ -88,7 +88,7 @@ public class KafkaClientConsumerTestSN {
     private static Consumer<String, GenericRecord> createConsumer(Properties props) {
         Properties propsConsumer = new Properties ();
         if(!commandline) {
-           String Topic = props.getProperty ("topic");
+           Topic = props.getProperty ("topic");
            duration = Integer.parseInt (props.getProperty ("duration"));
            String SchemaRegistryURL = props.getProperty ("schema_url");
            String ConsumerConfigFile = props.getProperty ("ConsumerConfgFile");
