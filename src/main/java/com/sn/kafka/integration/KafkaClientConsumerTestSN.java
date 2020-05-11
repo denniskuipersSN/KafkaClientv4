@@ -389,7 +389,7 @@ public class KafkaClientConsumerTestSN {
             if (args[0].contains ("getStats")) {
                 System.out.println ("Executing getStats");
                 OutputJson = getStats (newArgs);
-                System.out.println ("Executing getStats Done");
+                System.out.println ("Executing getStats Done test");
                }
         }
         else {
