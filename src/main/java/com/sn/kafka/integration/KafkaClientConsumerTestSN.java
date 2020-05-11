@@ -329,24 +329,26 @@ public class KafkaClientConsumerTestSN {
         Topic = cliArgs.switchValue("-topic");
         prop.setProperty ("group.id",cliArgs.switchValue("-group.id"));
         log4jfile = cliArgs.switchValue("-log4jfile");
-        prop.setProperty ("SCHEMA_REGISTRY_URL_CONFIG",cliArgs.switchValue("-schema_url"));
+        prop.setProperty ("schema.registry.url",cliArgs.switchValue("-schema_url"));
         prop.setProperty ("key.deserializer", cliArgs.switchValue("-key.deserializer"));
         prop.setProperty ("value.deserializer",cliArgs.switchValue("-value.deserializer"));
         prop.setProperty ("max.poll.records",cliArgs.switchValue("-max.poll.records"));
         prop.setProperty ("auto.offset.reset",cliArgs.switchValue("-auto.offset.reset"));
-        prop.setProperty ("security.protocol",cliArgs.switchValue("-security.protocol"));
-        prop.setProperty ("ssl.truststore.location",cliArgs.switchValue("-ssl.truststore.location"));
-        prop.setProperty ("ssl.truststore.password",cliArgs.switchValue("-ssl.truststore.password"));
-        prop.setProperty ("ssl.keystore.location",cliArgs.switchValue("-ssl.keystore.location"));
-        prop.setProperty ("ssl.keystore.password",cliArgs.switchValue("-ssl.keystore.password"));
-        prop.setProperty ("ssl.key.password",cliArgs.switchValue("-ssl.key.password"));
-        prop.setProperty ("schema.registry.ssl.key.password",cliArgs.switchValue("-schema.registry.ssl.key.password"));
-        prop.setProperty ("schema.registry.ssl.keystore.location",cliArgs.switchValue("-schema.registry.ssl.keystore.location"));
-        prop.setProperty ("schema.registry.ssl.keystore.password",cliArgs.switchValue("-schema.registry.ssl.keystore.password"));
-        prop.setProperty ("schema.registry.ssl.truststore.location",cliArgs.switchValue("-schema.registry.ssl.truststore.location"));
-        prop.setProperty ("schema.registry.ssl.truststore.password",cliArgs.switchValue("-schema.registry.ssl.truststore.password"));
-        prop.setProperty ("AUTO_OFFSET_RESET_CONFIG",cliArgs.switchValue("-auto.offset.reset.config"));
-
+        prop.setProperty ("auto.offset.reset", cliArgs.switchValue ("-auto.offset.reset.config"));
+        if (args.toString ().contains ("security.protocol"))
+        {
+            prop.setProperty ("security.protocol", cliArgs.switchValue ("-security.protocol"));
+            prop.setProperty ("ssl.truststore.location", cliArgs.switchValue ("-ssl.truststore.location"));
+            prop.setProperty ("ssl.truststore.password", cliArgs.switchValue ("-ssl.truststore.password"));
+            prop.setProperty ("ssl.keystore.location", cliArgs.switchValue ("-ssl.keystore.location"));
+            prop.setProperty ("ssl.keystore.password", cliArgs.switchValue ("-ssl.keystore.password"));
+            prop.setProperty ("ssl.key.password", cliArgs.switchValue ("-ssl.key.password"));
+            prop.setProperty ("schema.registry.ssl.key.password", cliArgs.switchValue ("-schema.registry.ssl.key.password"));
+            prop.setProperty ("schema.registry.ssl.keystore.location", cliArgs.switchValue ("-schema.registry.ssl.keystore.location"));
+            prop.setProperty ("schema.registry.ssl.keystore.password", cliArgs.switchValue ("-schema.registry.ssl.keystore.password"));
+            prop.setProperty ("schema.registry.ssl.truststore.location", cliArgs.switchValue ("-schema.registry.ssl.truststore.location"));
+            prop.setProperty ("schema.registry.ssl.truststore.password", cliArgs.switchValue ("-schema.registry.ssl.truststore.password"));
+        }
         return prop;
     }
     public static String runKafkaClient(String[] args) throws Exception {
@@ -387,6 +389,7 @@ public class KafkaClientConsumerTestSN {
             if (args[0].contains ("getStats")) {
                 System.out.println ("Executing getStats");
                 OutputJson = getStats (newArgs);
+                System.out.println ("Executing getStats Done");
                }
         }
         else {
