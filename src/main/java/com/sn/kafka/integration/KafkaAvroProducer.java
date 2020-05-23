@@ -1,6 +1,6 @@
 package com.sn.kafka.integration;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+//import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -91,7 +91,7 @@ public class KafkaAvroProducer {
 
     public static void SendJsonMessage(KafkaProducer producer, String Json) {
         //System.out.println("Sending Message" + avroRecord.getSchema().toString());
-        ProducerRecord<String, String> record = new ProducerRecord<> ("MetricTopic",Json);
+        ProducerRecord<String, String> record = new ProducerRecord<> ("MetricTopic","false", Json);
         try {
             producer.send (record);
         } catch (Exception e) {
