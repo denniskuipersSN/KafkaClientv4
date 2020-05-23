@@ -194,8 +194,8 @@ public class KafkaClientConsumerTestSN {
                         }
 
                     }
-                    if (stringBuilder.length () > 2)
-                       stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
+                    //if (stringBuilder.length () > 2)
+                    //   stringBuilder.replace (stringBuilder.length ()-2,stringBuilder.length ()-1,"");
                     System.out.println("Reading done :" + records.count());
             } catch (Exception e){
                 e.printStackTrace();
@@ -322,33 +322,37 @@ public class KafkaClientConsumerTestSN {
 
     private static Properties getCommandlineProp(String[] args){
         commandline = true;
+        System.out.println ("Reading Properties from Command line");
         Properties prop = new Properties ();
         CliArgs cliArgs = new CliArgs(args);
+        System.out.println ("Reading Properties from Command line : duration");
         duration = Integer.parseInt (cliArgs.switchValue ("-duration"));
         prop.setProperty ("bootstrap.servers",cliArgs.switchValue("-bootstrap.servers"));
         Topic = cliArgs.switchValue("-topic");
         prop.setProperty ("group.id",cliArgs.switchValue("-group.id"));
         log4jfile = cliArgs.switchValue("-log4jfile");
+        System.out.println ("Reading Properties from Command line : Kafka prop");
         prop.setProperty ("schema.registry.url",cliArgs.switchValue("-schema_url"));
         prop.setProperty ("key.deserializer", cliArgs.switchValue("-key.deserializer"));
         prop.setProperty ("value.deserializer",cliArgs.switchValue("-value.deserializer"));
         prop.setProperty ("max.poll.records",cliArgs.switchValue("-max.poll.records"));
         prop.setProperty ("auto.offset.reset",cliArgs.switchValue("-auto.offset.reset"));
         prop.setProperty ("auto.offset.reset", cliArgs.switchValue ("-auto.offset.reset.config"));
-        if (args.toString ().contains ("security.protocol"))
-        {
-            prop.setProperty ("security.protocol", cliArgs.switchValue ("-security.protocol"));
-            prop.setProperty ("ssl.truststore.location", cliArgs.switchValue ("-ssl.truststore.location"));
-            prop.setProperty ("ssl.truststore.password", cliArgs.switchValue ("-ssl.truststore.password"));
-            prop.setProperty ("ssl.keystore.location", cliArgs.switchValue ("-ssl.keystore.location"));
-            prop.setProperty ("ssl.keystore.password", cliArgs.switchValue ("-ssl.keystore.password"));
-            prop.setProperty ("ssl.key.password", cliArgs.switchValue ("-ssl.key.password"));
-            prop.setProperty ("schema.registry.ssl.key.password", cliArgs.switchValue ("-schema.registry.ssl.key.password"));
-            prop.setProperty ("schema.registry.ssl.keystore.location", cliArgs.switchValue ("-schema.registry.ssl.keystore.location"));
-            prop.setProperty ("schema.registry.ssl.keystore.password", cliArgs.switchValue ("-schema.registry.ssl.keystore.password"));
-            prop.setProperty ("schema.registry.ssl.truststore.location", cliArgs.switchValue ("-schema.registry.ssl.truststore.location"));
-            prop.setProperty ("schema.registry.ssl.truststore.password", cliArgs.switchValue ("-schema.registry.ssl.truststore.password"));
-        }
+        System.out.println ("Reading Properties from Command line : security");
+        System.out.println ("Reading Properties from Command line : security ssl");
+        prop.setProperty ("security.protocol", cliArgs.switchValue ("-security.protocol"));
+        prop.setProperty ("ssl.truststore.location", cliArgs.switchValue ("-ssl.truststore.location"));
+        prop.setProperty ("ssl.truststore.password", cliArgs.switchValue ("-ssl.truststore.password"));
+        prop.setProperty ("ssl.keystore.location", cliArgs.switchValue ("-ssl.keystore.location"));
+        prop.setProperty ("ssl.keystore.password", cliArgs.switchValue ("-ssl.keystore.password"));
+        prop.setProperty ("ssl.key.password", cliArgs.switchValue ("-ssl.key.password"));
+        System.out.println ("Reading Properties from Command line : security schema");
+        prop.setProperty ("schema.registry.ssl.key.password", cliArgs.switchValue ("-schema.registry.ssl.key.password"));
+        prop.setProperty ("schema.registry.ssl.keystore.location", cliArgs.switchValue ("-schema.registry.ssl.keystore.location"));
+        prop.setProperty ("schema.registry.ssl.keystore.password", cliArgs.switchValue ("-schema.registry.ssl.keystore.password"));
+        prop.setProperty ("schema.registry.ssl.truststore.location", cliArgs.switchValue ("-schema.registry.ssl.truststore.location"));
+        prop.setProperty ("schema.registry.ssl.truststore.password", cliArgs.switchValue ("-schema.registry.ssl.truststore.password"));
+
         return prop;
     }
     public static String runKafkaClient(String[] args) throws Exception {
