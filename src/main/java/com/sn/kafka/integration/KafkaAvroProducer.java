@@ -92,7 +92,7 @@ public class KafkaAvroProducer {
     public static void SendJsonMessage(KafkaProducer producer, String Json) {
         //System.out.println("Sending Message" + avroRecord.getSchema().toString());
 
-        ProducerRecord<String, String> record = new ProducerRecord<> ("MetricTopic", "JMX",Json);
+        ProducerRecord<String, String> record = new ProducerRecord<> ("MetricTopic", null,Json);
         try {
             producer.send (record);
         } catch (Exception e) {
