@@ -95,6 +95,7 @@ public class BrokerJmxClient
                   KafkaAvroProducer.SendJsonMessage (PClient, MeterMetric.toString ());
 
                   System.out.println ("Send ; " + MeterMetric);
+                  System.out.println ("Send ; " + MeterMetric);
               }
             }
             break;
