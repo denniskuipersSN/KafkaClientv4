@@ -82,7 +82,7 @@ public class KafkaAvroProducer {
             producer.flush ();
             System.out.println ("Finished flush");
             System.out.println ("Finished flush");
-            System.out.println ("Finished flush");
+            System.out.println ("Finished flu12sh");
             System.out.println ("Finished flush");
             System.out.println ("Finished flush");
 
