@@ -288,7 +288,7 @@ public class KafkaClientConsumerTestSN {
                     System.out.printf("offset = %d, key = %s, value = %s \n", record.offset(), record.key(), record.value());
                     stringBuilder.append(","+record.value());
                 }
-                System.out.println("Reading done :" + records.count());
+                System.out.println("Reading done : " + records.count());
             } catch (Exception e){
                 e.printStackTrace();
             }
