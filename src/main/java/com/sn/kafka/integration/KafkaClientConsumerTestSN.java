@@ -322,7 +322,7 @@ public class KafkaClientConsumerTestSN {
 
     private static Properties getCommandlineProp(String[] args){
         commandline = true;
-        System.out.println ("Reading Properties from Command line");
+        System.out.println ("Reading Properties from Command line ");
         Properties prop = new Properties ();
         CliArgs cliArgs = new CliArgs(args);
         System.out.println ("Reading Properties from Command line : duration");
