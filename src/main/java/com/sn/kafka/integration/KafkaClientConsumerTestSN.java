@@ -214,7 +214,7 @@ public class KafkaClientConsumerTestSN {
         System.setSecurityManager(null);
         Properties prop = getConfigFile(args);
         StringBuilder sb = new StringBuilder();
-        System.out.println ("test stats");
+        System.out.println ("test stats ");
         Date date = new Date();
         String host = "";
 
